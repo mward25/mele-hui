@@ -58,6 +58,12 @@ Kirigami.ApplicationWindow {
                     text: qsTr("Take Picture")
                     onClicked: pageStack.push(Qt.resolvedUrl("camera.qml"))
                 }
+                Controls.Button {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    text: qsTr("Create Song")
+                    onClicked: pageStack.push(Qt.resolvedUrl("new_song.qml"))
+                }
             }
         }
     }

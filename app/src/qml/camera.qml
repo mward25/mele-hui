@@ -9,6 +9,7 @@ Kirigami.Page {
     title: qsTr("Capture Picture")
 
     signal pictureAccept(var image)
+    signal pictureSave(var id)
 
     property var capturedImage: null
     property string previewUrl: ""
@@ -28,8 +29,9 @@ Kirigami.Page {
     }
 
     onPictureAccept: (image) => {
-        CameraBackend.saveCapture(image)
+        let savedId = CameraBackend.saveCapture(image)
         cameraPage.capturedImage = null
+        pictureSave(savedId)
     }
 
     ColumnLayout {

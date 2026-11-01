@@ -37,7 +37,7 @@ class CameraBackend(QObject):
                 raise RuntimeError(f"failed to save image to {out_path}")
 
             session.commit()
-            return str(out_path)
+            return fs.id
         except Exception:
             session.rollback()
             raise
