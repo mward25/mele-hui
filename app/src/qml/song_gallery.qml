@@ -14,7 +14,15 @@ Kirigami.Page {
         anchors.fill: parent
         Repeater {
             model: songList.songs
-            delegate: Kirigami.Card {
+            Kirigami.Card {
+                actions: [
+                    Kirigami.Action {
+                        text: qsTr("Open")
+                        onTriggered: {
+                            pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {"songId": modelData.id})
+                        }
+                    }
+                ]
                 banner {
                     source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
                     title: modelData.name
