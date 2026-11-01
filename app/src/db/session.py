@@ -10,9 +10,14 @@ DATABASE_URL = os.environ.get("MELEHUI_DB_URL", "sqlite:///" + str(Path(__file__
 engine = create_engine(DATABASE_URL, future=True)
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
-# Ensure tables exist for dev convenience; Alembic remains source of truth.
-Base.metadata.create_all(engine)
-
 
 def init_db():
-    Base.metadata.create_all(engine)
+    # Run Alembic migrations to bring schema up to date.
+    from alembic.config import Config
+    from alembic import command as alembic_command
+    import os
+    app_root = Path(__file__).resolve().parents[2]
+    cfg = Config(str(app_root / "alembic.ini"))
+    cfg.set_main_option("script_location", str(app_root / "migrations"))
+    cfg.set_main_option("sqlalchemy.url", DATABASE_URL)
+    alembic_command.upgrade(cfg, "head")
