@@ -4,7 +4,7 @@ import os
 import uuid
 from pathlib import Path
 
-from PySide6.QtCore import QObject, Slot
+from PySide6.QtCore import QObject, Slot, QBuffer, QIODevice, QByteArray
 from PySide6.QtGui import QImage
 
 from db import FileStore
@@ -13,6 +13,15 @@ from db.events import STORAGE_ROOT
 
 
 class CameraBackend(QObject):
+    @Slot(QImage, result=str)
+    def imageToDataUrl(self, image: QImage) -> str:
+        buffer = QBuffer()
+        buffer.open(QIODevice.OpenModeFlag.WriteOnly)
+        image.save(buffer, "PNG")
+        encoded = buffer.data().toBase64().data().decode("ascii")
+        buffer.close()
+        return "data:image/png;base64," + encoded
+
     @Slot(QImage)
     def saveCapture(self, image: QImage) -> str:
         session = SessionLocal()
