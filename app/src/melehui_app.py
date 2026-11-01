@@ -11,6 +11,8 @@ from PySide6.QtCore import QUrl
 from PySide6.QtQml import QQmlApplicationEngine
 
 from camera_backend import CameraBackend
+from song_backend import SongBackend
+from PySide6.QtQml import qmlRegisterType
 from db.session import init_db
 
 
@@ -19,10 +21,14 @@ def main():
     app = QGuiApplication(sys.argv)
     init_db()
     engine = QQmlApplicationEngine()
+    qmlRegisterType(SongBackend, "MeleHui", 1, 0, "SongBackend")
     camera_backend = CameraBackend()
+    song_backend = SongBackend()
     engine.rootContext().setContextProperty("CameraBackend", camera_backend)
+    engine.rootContext().setContextProperty("SongBackend", song_backend)
     # keep reference alive
     engine._camera_backend = camera_backend
+    engine._song_backend = song_backend
 
     """Needed to close the app with Ctrl+C"""
     signal.signal(signal.SIGINT, signal.SIG_DFL)
