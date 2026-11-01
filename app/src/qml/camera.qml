@@ -11,7 +11,12 @@ Kirigami.Page {
         id: captureSession
         camera: Camera { id: camera; active: true }
         videoOutput: viewfinder
-        imageCapture: ImageCapture { id: imageCapture }
+        imageCapture: ImageCapture {
+            id: imageCapture
+            onImageCaptured: (requestId, preview) => {
+                CameraBackend.saveCapture(preview)
+            }
+        }
     }
 
     ColumnLayout {
