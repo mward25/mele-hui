@@ -1,1 +1,6 @@
 /.plan.autosave.xopp
+/app/docs/__pycache__
+/app/migrations/__pycache__
+/app/migrations/versions/__pycache__
+/app/src/db/__pycache__
+/app/src/__pycache__

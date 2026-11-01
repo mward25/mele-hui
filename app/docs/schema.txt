@@ -1,0 +1,30 @@
+General schema:
+
+FileStore {
+	int id (primary key)
+	// Relative to db
+	string path (defaults files/{{id}}/)
+	// Name of file (with extension)
+	string filename
+}
+
+Setlist {
+	int id (primary key)
+	string name
+}
+
+Setlist_Song {
+	int id (primary key)
+	int setlist_id
+	int song_id
+}
+
+Song {
+	int id (primary key)
+	string name
+}
+Page {
+	int id (primary key)
+	int song_id (references Song)
+	int file_id (references FileStore)
+}
