@@ -5,7 +5,13 @@ import QtMultimedia
 import org.kde.kirigami as Kirigami
 
 Kirigami.Page {
+    id: cameraPage
     title: qsTr("Capture Picture")
+
+    signal pictureAccept(var image)
+
+    property var capturedImage: null
+    property string previewUrl: ""
 
     CaptureSession {
         id: captureSession
@@ -14,9 +20,16 @@ Kirigami.Page {
         imageCapture: ImageCapture {
             id: imageCapture
             onImageCaptured: (requestId, preview) => {
-                CameraBackend.saveCapture(preview)
+                cameraPage.capturedImage = preview
+                cameraPage.previewUrl = CameraBackend.imageToDataUrl(preview)
+                saveDialog.open()
             }
         }
+    }
+
+    onPictureAccept: (image) => {
+        CameraBackend.saveCapture(image)
+        cameraPage.capturedImage = null
     }
 
     ColumnLayout {
@@ -34,5 +47,38 @@ Kirigami.Page {
             text: qsTr("Capture")
             onClicked: imageCapture.capture()
         }
+    }
+
+    Kirigami.Dialog {
+        id: saveDialog
+        title: qsTr("Save Picture")
+        modal: true
+        anchors.centerIn: parent
+
+        ColumnLayout {
+            Image {
+                source: cameraPage.previewUrl
+                fillMode: Image.PreserveAspectFit
+                Layout.preferredWidth: 320
+                Layout.preferredHeight: 240
+            }
+        }
+        standardButtons: Kirigami.Dialog.NoButton
+        flatFooterButtons: false
+        customFooterActions: [
+            Kirigami.Action {
+                text: qsTr("Yes")
+                onTriggered: {
+                    cameraPage.pictureAccept(cameraPage.capturedImage)
+                    saveDialog.close()
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("No, Retake")
+                onTriggered: saveDialog.close()
+            }
+        ]
+
+        onClosed: cameraPage.capturedImage = null
     }
 }
