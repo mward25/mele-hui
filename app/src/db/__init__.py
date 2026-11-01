@@ -6,3 +6,5 @@ from .setlist_song import SetlistSong
 from .song import Song
 
 __all__ = ["Base", "FileStore", "Page", "Setlist", "SetlistSong", "Song"]
+
+from . import events  # noqa: F401, E402

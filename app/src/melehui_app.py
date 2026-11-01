@@ -10,11 +10,19 @@ from PySide6.QtCore import QUrl
 
 from PySide6.QtQml import QQmlApplicationEngine
 
+from camera_backend import CameraBackend
+from db.session import init_db
+
 
 def main():
     """Initializes and manages the application execution"""
     app = QGuiApplication(sys.argv)
+    init_db()
     engine = QQmlApplicationEngine()
+    camera_backend = CameraBackend()
+    engine.rootContext().setContextProperty("CameraBackend", camera_backend)
+    # keep reference alive
+    engine._camera_backend = camera_backend
 
     """Needed to close the app with Ctrl+C"""
     signal.signal(signal.SIGINT, signal.SIG_DFL)
