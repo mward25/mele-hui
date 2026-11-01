@@ -11,7 +11,7 @@ class FileStore(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     bucket: Mapped[str] = mapped_column(String, default="captures")
-    filename: Mapped[str] = mapped_column(String)
+    filename: Mapped[str] = mapped_column(String, nullable=False)
 
     pages: Mapped[list["Page"]] = relationship(back_populates="file_store")
 

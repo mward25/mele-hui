@@ -22,13 +22,15 @@ class CameraBackend(QObject):
         buffer.close()
         return "data:image/png;base64," + encoded
 
-    @Slot(QImage)
-    def saveCapture(self, image: QImage) -> str:
+    @Slot(QImage, result=int)
+    def saveCapture(self, image: QImage) -> int:
         session = SessionLocal()
         try:
             fs = FileStore(bucket="captures", filename=f"{uuid.uuid4()}.png")
             session.add(fs)
             session.flush()  # populate fs.id
+            print(f"Python ID: {fs.id}")
+            return_val = fs.id
 
             out_path = fs.full_path
             out_path.parent.mkdir(parents=True, exist_ok=True)

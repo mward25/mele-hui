@@ -55,8 +55,8 @@ Kirigami.ApplicationWindow {
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
-                    text: qsTr("Take Picture")
-                    onClicked: pageStack.push(Qt.resolvedUrl("camera.qml"))
+                    text: qsTr("View Songs")
+                    onClicked: pageStack.push(Qt.resolvedUrl("song_gallery.qml"))
                 }
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
