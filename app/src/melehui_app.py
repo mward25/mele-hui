@@ -14,6 +14,7 @@ from camera_backend import CameraBackend
 from song_backend import SongBackend
 from song_galery_list import SongGaleryList
 from song_view import SongView
+from auto_cropper import AutoCropper
 from PySide6.QtQml import qmlRegisterType
 from db.session import init_db
 
@@ -26,6 +27,7 @@ def main():
     qmlRegisterType(SongBackend, "MeleHui", 1, 0, "SongBackend")
     qmlRegisterType(SongGaleryList, "MeleHui", 1, 0, "SongGaleryList")
     qmlRegisterType(SongView, "MeleHui", 1, 0, "SongView")
+    qmlRegisterType(AutoCropper, "MeleHui", 1, 0, "AutoCropper")
     camera_backend = CameraBackend()
     song_backend = SongBackend()
     engine.rootContext().setContextProperty("CameraBackend", camera_backend)
