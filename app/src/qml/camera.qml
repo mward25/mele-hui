@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import QtMultimedia
 import org.kde.kirigami as Kirigami
+import MeleHui 1.0
 
 Kirigami.Page {
     id: cameraPage
@@ -26,6 +27,11 @@ Kirigami.Page {
                 saveDialog.open()
             }
         }
+    }
+
+    AutoCropper {
+        id: autoCropper
+        image: cameraPage.capturedImage
     }
 
     onPictureAccept: (image) => {
@@ -64,12 +70,25 @@ Kirigami.Page {
                 Layout.preferredWidth: 320
                 Layout.preferredHeight: 240
             }
+            Image {
+                source: autoCropper.croppedImage.isNull ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
+                fillMode: Image.PreserveAspectFit
+                Layout.preferredWidth: 320
+                Layout.preferredHeight: 240
+            }
         }
         standardButtons: Kirigami.Dialog.NoButton
         flatFooterButtons: false
         customFooterActions: [
             Kirigami.Action {
-                text: qsTr("Yes")
+                text: qsTr("Yes, cropped")
+                onTriggered: {
+                    cameraPage.pictureAccept(autoCropper.croppedImage)
+                    saveDialog.close()
+                }
+            },
+            Kirigami.Action {
+                text: qsTr("Yes, uncropped")
                 onTriggered: {
                     cameraPage.pictureAccept(cameraPage.capturedImage)
                     saveDialog.close()
