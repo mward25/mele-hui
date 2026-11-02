@@ -10,7 +10,7 @@ Item {
     property string tool: "none"  // "none" | "pen" | "eraser"
     property bool drawingActive: false
     property real penWidth: 3
-    property string penColor: "#e01b24"
+    property string penColor: "#111111"
 
     property var strokes: []
     property string currentStroke: ""
