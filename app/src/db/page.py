@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Integer
+from sqlalchemy import ForeignKey, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -13,3 +13,5 @@ class Page(Base):
 
     song: Mapped["Song"] = relationship(back_populates="pages")
     file_store: Mapped["FileStore"] = relationship(back_populates="pages")
+
+    drawing_svg: Mapped[str | None] = mapped_column(Text, nullable=True)
