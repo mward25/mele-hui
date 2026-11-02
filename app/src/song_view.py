@@ -46,12 +46,6 @@ class SongView(QObject):
         self._pages = None
         self.refresh()
 
-    # @Slot(int, result=int)
-    # def songId(self, id):
-    #     self._song_id = id
-    #     self.refresh()
-    #     return self._song_id
-
     def refresh(self):
         if self._song_id == None:
             self._song = None
