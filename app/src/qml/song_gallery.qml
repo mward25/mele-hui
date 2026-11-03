@@ -8,7 +8,9 @@ Kirigami.Page {
     id: root
     title: qsTr("Song Gallery")
 
-    SongGaleryList { id: songList }
+    SongGaleryList {
+        id: songList
+    }
 
     Kirigami.CardsLayout {
         anchors.fill: parent
@@ -19,7 +21,9 @@ Kirigami.Page {
                     Kirigami.Action {
                         text: qsTr("Open")
                         onTriggered: {
-                            pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {"songId": modelData.id})
+                            pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {
+                                "songId": modelData.id
+                            });
                         }
                     }
                 ]

@@ -1,0 +1,16 @@
+fail_fast: false
+exclude: extlibs
+repos:
+  - repo: https://github.com/tomas-krupa/qmlformat-hook.git
+    rev: 1.2.0
+    hooks:
+      - id: qmlformat
+        args: ["--inplace"]
+        additional_dependencies:
+          - PySide6-Essentials==6.11.0 # override version of Qt Python metapackagerepos:
+  # Using this mirror lets us use mypyc-compiled black, which is about 2x faster
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.10.1
+    hooks:
+      - id: black
+        language_version: python3.14

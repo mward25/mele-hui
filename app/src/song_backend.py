@@ -4,7 +4,6 @@ from PySide6.QtQml import QmlElement
 from db import Song, Page
 from db.session import SessionLocal
 
-
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1
 
@@ -52,7 +51,7 @@ class SongBackend(QObject):
         session = SessionLocal()
         try:
             page = session.get(Page, page_id)
-            return (page.drawing_svg if page is not None and page.drawing_svg else "")
+            return page.drawing_svg if page is not None and page.drawing_svg else ""
         finally:
             session.close()
 
@@ -60,8 +59,11 @@ class SongBackend(QObject):
     def strokesToSvg(self, width: int, height: int, strokes) -> str:
         width = width or 1
         height = height or 1
-        out = ["<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>" % (width, height)]
-        for stroke in (strokes or []):
+        out = [
+            "<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>"
+            % (width, height)
+        ]
+        for stroke in strokes or []:
             pts = stroke.get("points") if isinstance(stroke, dict) else None
             if not pts or len(pts) < 2:
                 continue
@@ -70,17 +72,26 @@ class SongBackend(QObject):
             for pt in pts[1:]:
                 d += " L %s %s" % (pt["x"], pt["y"])
             if mode == "erase":
-                out.append("<path d='%s' fill='none' stroke='none' stroke-width='0' data-mode='erase'/>" % d)
+                out.append(
+                    "<path d='%s' fill='none' stroke='none' stroke-width='0' data-mode='erase'/>"
+                    % d
+                )
             else:
-                out.append("<path d='%s' fill='none' stroke='#e01b24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' data-mode='pen'/>" % d)
+                out.append(
+                    "<path d='%s' fill='none' stroke='#e01b24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' data-mode='pen'/>"
+                    % d
+                )
         out.append("</svg>")
         return "".join(out)
 
     @Slot(str, result="QVariantList")
     def svgToStrokes(self, svg: str):
         import re
+
         strokes = []
-        for m in re.finditer(r"<path[^>]*d='([^']*)'[^>]*data-mode='([^']*)'", svg or ""):
+        for m in re.finditer(
+            r"<path[^>]*d='([^']*)'[^>]*data-mode='([^']*)'", svg or ""
+        ):
             d = m.group(1)
             mode = m.group(2)
             pts = []
@@ -89,7 +100,8 @@ class SongBackend(QObject):
             while i < len(toks):
                 if toks[i] in ("M", "L") and i + 2 < len(toks):
                     try:
-                        x = float(toks[i+1]); y = float(toks[i+2])
+                        x = float(toks[i + 1])
+                        y = float(toks[i + 2])
                         pts.append({"x": x, "y": y})
                     except ValueError:
                         pass

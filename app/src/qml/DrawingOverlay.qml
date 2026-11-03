@@ -17,23 +17,30 @@ Item {
 
     signal svgChanged(string svg)
 
-
     function loadSvg(svg) {
-        if (backend !== null) strokes = backend.svgToStrokes(svg || "");
-        else strokes = [];
+        if (backend !== null)
+            strokes = backend.svgToStrokes(svg || "");
+        else
+            strokes = [];
         canvas.requestPaint();
     }
 
     function save() {
         let svg = (backend !== null) ? backend.strokesToSvg(width, height, strokes) : "";
         svgChanged(svg);
-        if (backend !== null && pageId > 0) backend.saveDrawing(pageId, svg);
+        if (backend !== null && pageId > 0)
+            backend.saveDrawing(pageId, svg);
     }
 
-    function clear() { strokes = []; canvas.requestPaint(); }
+    function clear() {
+        strokes = [];
+        canvas.requestPaint();
+    }
 
-    onBackendChanged: if (backend !== null && pageId > 0) loadSvg(backend.drawingForPage(pageId));
-    onPageIdChanged: if (backend !== null && pageId > 0) loadSvg(backend.drawingForPage(pageId));
+    onBackendChanged: if (backend !== null && pageId > 0)
+        loadSvg(backend.drawingForPage(pageId))
+    onPageIdChanged: if (backend !== null && pageId > 0)
+        loadSvg(backend.drawingForPage(pageId))
 
     Canvas {
         id: canvas
@@ -43,10 +50,12 @@ Item {
             ctx.clearRect(0, 0, width, height);
             for (let i = 0; i < root.strokes.length; i++) {
                 let s = root.strokes[i];
-                if (!s.points || s.points.length < 2) continue;
+                if (!s.points || s.points.length < 2)
+                    continue;
                 ctx.beginPath();
                 ctx.moveTo(s.points[0].x, s.points[0].y);
-                for (let j = 1; j < s.points.length; j++) ctx.lineTo(s.points[j].x, s.points[j].y);
+                for (let j = 1; j < s.points.length; j++)
+                    ctx.lineTo(s.points[j].x, s.points[j].y);
                 if (s.mode === "eraser") {
                     ctx.globalCompositeOperation = "destination-out";
                     ctx.lineWidth = root.penWidth * 2;
@@ -65,21 +74,35 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onPressed: (mouse) => {
-            if (root.tool === "none") return;
+        onPressed: mouse => {
+            if (root.tool === "none")
+                return;
             root.drawingActive = true;
             root.currentStroke = root.tool;
-            let pts = [{ x: mouse.x, y: mouse.y }];
-            root.strokes.push({ mode: root.currentStroke, points: pts });
+            let pts = [
+                {
+                    x: mouse.x,
+                    y: mouse.y
+                }
+            ];
+            root.strokes.push({
+                mode: root.currentStroke,
+                points: pts
+            });
         }
-        onPositionChanged: (mouse) => {
-            if (!pressed || root.tool === "none") return;
+        onPositionChanged: mouse => {
+            if (!pressed || root.tool === "none")
+                return;
             let last = root.strokes[root.strokes.length - 1];
-            last.points.push({ x: mouse.x, y: mouse.y });
+            last.points.push({
+                x: mouse.x,
+                y: mouse.y
+            });
             canvas.requestPaint();
         }
-        onReleased: (mouse) => {
-            if (!root.drawingActive) return;
+        onReleased: mouse => {
+            if (!root.drawingActive)
+                return;
             root.drawingActive = false;
             root.save();
         }
@@ -87,8 +110,17 @@ Item {
 
     Row {
         spacing: 8
-        Controls.Button { text: root.tool === "pen" ? "Pen ✓" : "Pen"; onClicked: root.tool = (root.tool === "pen" ? "none" : "pen") }
-        Controls.Button { text: root.tool === "eraser" ? "Erase ✓" : "Erase"; onClicked: root.tool = (root.tool === "eraser" ? "none" : "eraser") }
-        Controls.Button { text: "Clear"; onClicked: root.clear() }
+        Controls.Button {
+            text: root.tool === "pen" ? "Pen ✓" : "Pen"
+            onClicked: root.tool = (root.tool === "pen" ? "none" : "pen")
+        }
+        Controls.Button {
+            text: root.tool === "eraser" ? "Erase ✓" : "Erase"
+            onClicked: root.tool = (root.tool === "eraser" ? "none" : "eraser")
+        }
+        Controls.Button {
+            text: "Clear"
+            onClicked: root.clear()
+        }
     }
 }

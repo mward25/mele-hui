@@ -17,14 +17,17 @@ Kirigami.Page {
 
     CaptureSession {
         id: captureSession
-        camera: Camera { id: camera; active: true }
+        camera: Camera {
+            id: camera
+            active: true
+        }
         videoOutput: viewfinder
         imageCapture: ImageCapture {
             id: imageCapture
             onImageCaptured: (requestId, preview) => {
-                cameraPage.capturedImage = preview
-                cameraPage.previewUrl = CameraBackend.imageToDataUrl(preview)
-                saveDialog.open()
+                cameraPage.capturedImage = preview;
+                cameraPage.previewUrl = CameraBackend.imageToDataUrl(preview);
+                saveDialog.open();
             }
         }
     }
@@ -34,10 +37,10 @@ Kirigami.Page {
         image: cameraPage.capturedImage
     }
 
-    onPictureAccept: (image) => {
-        let savedId = CameraBackend.saveCapture(image)
-        cameraPage.capturedImage = null
-        pictureSave(savedId)
+    onPictureAccept: image => {
+        let savedId = CameraBackend.saveCapture(image);
+        cameraPage.capturedImage = null;
+        pictureSave(savedId);
     }
 
     ColumnLayout {
@@ -83,15 +86,15 @@ Kirigami.Page {
             Kirigami.Action {
                 text: qsTr("Yes, cropped")
                 onTriggered: {
-                    cameraPage.pictureAccept(autoCropper.croppedImage)
-                    saveDialog.close()
+                    cameraPage.pictureAccept(autoCropper.croppedImage);
+                    saveDialog.close();
                 }
             },
             Kirigami.Action {
                 text: qsTr("Yes, uncropped")
                 onTriggered: {
-                    cameraPage.pictureAccept(cameraPage.capturedImage)
-                    saveDialog.close()
+                    cameraPage.pictureAccept(cameraPage.capturedImage);
+                    saveDialog.close();
                 }
             },
             Kirigami.Action {

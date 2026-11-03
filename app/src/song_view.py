@@ -7,6 +7,7 @@ from db.session import SessionLocal
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1
 
+
 @QmlElement
 class SongView(QObject):
     songChanged = Signal()
@@ -16,25 +17,28 @@ class SongView(QObject):
         if self._song_id == None:
             return None
         else:
-            assert(self._song != None)
+            assert self._song != None
             return {
                 "id": self._song.id,
                 "name": self._song.name,
             }
+
     def _get_pages(self):
         if self._song_id == None:
             return None
         else:
-            assert(self._song != None)
-            assert(self._pages != None)
+            assert self._song != None
+            assert self._pages != None
             return self._pages
 
     def _get_song_id(self):
         return self._song_id
+
     def _set_song_id(self, song_id):
         self._song_id = song_id
         self.songIdChanged.emit()
         self.reload()
+
     song = Property("QVariantMap", _get_song, notify=songChanged)
     pages = Property("QVariantList", _get_pages, notify=songChanged)
     songId = Property("int", _get_song_id, _set_song_id, notify=songIdChanged)
@@ -55,10 +59,17 @@ class SongView(QObject):
                 self._song = session.get(Song, self._song_id)
                 self._pages = []
                 for page in self._song.pages:
-                    self._pages.append({"id": page.id, "song_id": page.song_id, "file_path": QUrl.fromLocalFile(page.file_store.full_path)})
+                    self._pages.append(
+                        {
+                            "id": page.id,
+                            "song_id": page.song_id,
+                            "file_path": QUrl.fromLocalFile(page.file_store.full_path),
+                        }
+                    )
                 self.songChanged.emit()
             finally:
                 session.close()
+
     @Slot()
     def reload(self):
         self.refresh()

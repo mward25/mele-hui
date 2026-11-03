@@ -52,12 +52,18 @@ class AutoCropper(QObject):
         qimg = self._image.convertToFormat(QImage.Format.Format_RGB888)
         h, w = qimg.height(), qimg.width()
         bpl = qimg.bytesPerLine()
-        arr = np.frombuffer(qimg.constBits(), dtype=np.uint8).reshape((h, bpl))[:, : w * 3].reshape((h, w, 3))
+        arr = (
+            np.frombuffer(qimg.constBits(), dtype=np.uint8)
+            .reshape((h, bpl))[:, : w * 3]
+            .reshape((h, w, 3))
+        )
         bgr = cv2.cvtColor(arr, cv2.COLOR_RGB2BGR)
         gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
         _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(
+            thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        )
         if not contours:
             self._cropped = self._image.copy()
             self.croppedImageChanged.emit()
