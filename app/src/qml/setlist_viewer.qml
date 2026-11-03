@@ -27,11 +27,42 @@ Kirigami.Page {
             }
         }
         ListView {
+            id: songList
             Layout.fillWidth: true
             Layout.fillHeight: true
             model: setlistView
-            delegate: Controls.Label {
-                text: model.name
+            moveDisplaced: Transition {
+                YAnimator {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.InOutQuad
+                }
+            }
+            delegate: Item {
+                id: listItemRoot
+
+                required property int index
+                required property string name
+
+                width: songList.width - songList.leftMargin - songList.rightMargin
+                height: item.implicitHeight
+
+                Controls.ItemDelegate {
+                    id: item
+                    width: listItemRoot.width
+                    contentItem: RowLayout {
+                        Kirigami.ListItemDragHandle {
+                            listItem: item
+                            listView: songList
+                            onMoveRequested: (oldIndex, newIndex) => {
+                                setlistView.moveSong(oldIndex, newIndex);
+                            }
+                        }
+                        Controls.Label {
+                            Layout.fillWidth: true
+                            text: listItemRoot.name
+                        }
+                    }
+                }
             }
         }
     }

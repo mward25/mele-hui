@@ -28,6 +28,7 @@ class SetlistView(QAbstractListModel):
         self._roles = {
             Qt.UserRole + 1: b"id",
             Qt.UserRole + 2: b"name",
+            Qt.UserRole + 3: b"setlistSongId",
         }
 
     def _get_setlist_id(self):
@@ -51,6 +52,8 @@ class SetlistView(QAbstractListModel):
             return song.get("id")
         if role == Qt.UserRole + 2:
             return song.get("name")
+        if role == Qt.UserRole + 3:
+            return song.get("setlistSongId")
         return None
 
     def roleNames(self):
@@ -66,12 +69,11 @@ class SetlistView(QAbstractListModel):
                 if setlist is not None:
                     for ss in setlist.setlist_songs:
                         song = ss.song
-                        self._songs.append({"id": song.id, "name": song.name})
+                        self._songs.append({"id": song.id, "name": song.name, "setlistSongId": ss.id})
             finally:
                 session.close()
         self.endResetModel()
         self.songsChanged.emit()
-
 
     @Slot(int)
     def addSong(self, song_id: int) -> None:
@@ -79,9 +81,36 @@ class SetlistView(QAbstractListModel):
             return
         session = SessionLocal()
         try:
-            assert song_id != None
-            assert self._setlist_id != None
-            session.add(SetlistSong(setlist_id=self._setlist_id, song_id=int(song_id)))
+            assert song_id is not None
+            assert self._setlist_id is not None
+            existing = session.query(SetlistSong).filter_by(setlist_id=self._setlist_id).count()
+            session.add(SetlistSong(setlist_id=self._setlist_id, song_id=int(song_id), position=existing))
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        self.refresh()
+
+    @Slot(int, int)
+    def moveSong(self, fromIndex: int, toIndex: int) -> None:
+        if self._setlist_id is None:
+            return
+        if fromIndex < 0 or toIndex < 0 or fromIndex >= len(self._songs) or toIndex >= len(self._songs):
+            return
+        if fromIndex == toIndex:
+            return
+        session = SessionLocal()
+        try:
+            setlist = session.get(Setlist, self._setlist_id)
+            if setlist is None:
+                return
+            items = list(setlist.setlist_songs)
+            item = items.pop(fromIndex)
+            items.insert(toIndex, item)
+            for idx, ss in enumerate(items):
+                ss.position = idx
             session.commit()
         except Exception:
             session.rollback()
