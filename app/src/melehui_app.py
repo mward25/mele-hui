@@ -12,7 +12,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 
 from camera_backend import CameraBackend
 from song_backend import SongBackend
-from song_galery_list import SongGaleryList
+from song_gallery_list import SongGalleryList
 from song_view import SongView
 from auto_cropper import AutoCropper
 from auto_namer import AutoNamer
@@ -27,7 +27,7 @@ def main():
     init_db()
     engine = QQmlApplicationEngine()
     qmlRegisterType(SongBackend, "MeleHui", 1, 0, "SongBackend")
-    qmlRegisterType(SongGaleryList, "MeleHui", 1, 0, "SongGaleryList")
+    qmlRegisterType(SongGalleryList, "MeleHui", 1, 0, "SongGalleryList")
     qmlRegisterType(SongView, "MeleHui", 1, 0, "SongView")
     qmlRegisterType(AutoCropper, "MeleHui", 1, 0, "AutoCropper")
     qmlRegisterType(AutoNamer, "MeleHui", 1, 0, "AutoNamer")
