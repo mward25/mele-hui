@@ -10,7 +10,7 @@ Kirigami.Page {
     title: qsTr("Capture Picture")
 
     signal pictureAccept(var image)
-    signal pictureSave(var id)
+    signal pictureSave(var id, var title)
 
     property var capturedImage: null
     property string previewUrl: ""
@@ -36,11 +36,15 @@ Kirigami.Page {
         id: autoCropper
         image: cameraPage.capturedImage
     }
+    AutoNamer {
+        id: autoNamer
+        image: autoCropper.croppedImage
+    }
 
     onPictureAccept: image => {
         let savedId = CameraBackend.saveCapture(image);
         cameraPage.capturedImage = null;
-        pictureSave(savedId);
+        pictureSave(savedId, autoNamer.title);
     }
 
     ColumnLayout {
@@ -67,6 +71,9 @@ Kirigami.Page {
         anchors.centerIn: parent
 
         ColumnLayout {
+            Kirigami.Heading {
+                text: autoNamer.title ? autoNamer.title : "No title detected"
+            }
             Image {
                 source: cameraPage.previewUrl
                 fillMode: Image.PreserveAspectFit
@@ -74,7 +81,7 @@ Kirigami.Page {
                 Layout.preferredHeight: 240
             }
             Image {
-                source: autoCropper.croppedImage.isNull ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
+                source: autoCropper.croppedImage == null ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
                 fillMode: Image.PreserveAspectFit
                 Layout.preferredWidth: 320
                 Layout.preferredHeight: 240
