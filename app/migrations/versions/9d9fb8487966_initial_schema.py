@@ -38,12 +38,16 @@ def upgrade() -> None:
         "page",
         sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
         sa.Column("song_id", sa.Integer(), sa.ForeignKey("song.id"), nullable=False),
-        sa.Column("file_id", sa.Integer(), sa.ForeignKey("file_store.id"), nullable=False),
+        sa.Column(
+            "file_id", sa.Integer(), sa.ForeignKey("file_store.id"), nullable=False
+        ),
     )
     op.create_table(
         "setlist_song",
         sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
-        sa.Column("setlist_id", sa.Integer(), sa.ForeignKey("setlist.id"), nullable=False),
+        sa.Column(
+            "setlist_id", sa.Integer(), sa.ForeignKey("setlist.id"), nullable=False
+        ),
         sa.Column("song_id", sa.Integer(), sa.ForeignKey("song.id"), nullable=False),
     )
 

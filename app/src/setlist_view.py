@@ -39,7 +39,9 @@ class SetlistView(QAbstractListModel):
         self.setlistIdChanged.emit()
         self.reload()
 
-    setlistId = Property("int", _get_setlist_id, _set_setlist_id, notify=setlistIdChanged)
+    setlistId = Property(
+        "int", _get_setlist_id, _set_setlist_id, notify=setlistIdChanged
+    )
 
     def rowCount(self, parent=QModelIndex()):
         return len(self._songs)
@@ -69,7 +71,9 @@ class SetlistView(QAbstractListModel):
                 if setlist is not None:
                     for ss in setlist.setlist_songs:
                         song = ss.song
-                        self._songs.append({"id": song.id, "name": song.name, "setlistSongId": ss.id})
+                        self._songs.append(
+                            {"id": song.id, "name": song.name, "setlistSongId": ss.id}
+                        )
             finally:
                 session.close()
         self.endResetModel()
@@ -83,8 +87,16 @@ class SetlistView(QAbstractListModel):
         try:
             assert song_id is not None
             assert self._setlist_id is not None
-            existing = session.query(SetlistSong).filter_by(setlist_id=self._setlist_id).count()
-            session.add(SetlistSong(setlist_id=self._setlist_id, song_id=int(song_id), position=existing))
+            existing = (
+                session.query(SetlistSong)
+                .filter_by(setlist_id=self._setlist_id)
+                .count()
+            )
+            session.add(
+                SetlistSong(
+                    setlist_id=self._setlist_id, song_id=int(song_id), position=existing
+                )
+            )
             session.commit()
         except Exception:
             session.rollback()
@@ -97,7 +109,12 @@ class SetlistView(QAbstractListModel):
     def moveSong(self, fromIndex: int, toIndex: int) -> None:
         if self._setlist_id is None:
             return
-        if fromIndex < 0 or toIndex < 0 or fromIndex >= len(self._songs) or toIndex >= len(self._songs):
+        if (
+            fromIndex < 0
+            or toIndex < 0
+            or fromIndex >= len(self._songs)
+            or toIndex >= len(self._songs)
+        ):
             return
         if fromIndex == toIndex:
             return

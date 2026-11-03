@@ -10,4 +10,6 @@ class Setlist(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String)
 
-    setlist_songs: Mapped[list["SetlistSong"]] = relationship(back_populates="setlist", order_by="SetlistSong.position")
+    setlist_songs: Mapped[list["SetlistSong"]] = relationship(
+        back_populates="setlist", order_by="SetlistSong.position"
+    )

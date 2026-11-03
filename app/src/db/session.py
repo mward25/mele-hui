@@ -11,12 +11,18 @@ DATABASE_URL = os.environ.get(
     "sqlite:///" + str(Path(__file__).resolve().parents[2] / "melehui.db"),
 )
 from sqlalchemy import event
-engine = create_engine(DATABASE_URL, future=True, connect_args={"check_same_thread": False})
+
+engine = create_engine(
+    DATABASE_URL, future=True, connect_args={"check_same_thread": False}
+)
+
 
 @event.listens_for(engine, "connect")
 def _enable_sqlite_fk(dbapi_conn, _):
     if DATABASE_URL.startswith("sqlite"):
         dbapi_conn.execute("PRAGMA foreign_keys=ON")
+
+
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 

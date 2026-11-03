@@ -24,7 +24,7 @@ Kirigami.Page {
                         text: qsTr("Select")
                         onTriggered: {
                             root.songSelected(modelData.id);
-                            console.log('Trigger action!')
+                            console.log('Trigger action!');
                         }
                     }
                 ]
