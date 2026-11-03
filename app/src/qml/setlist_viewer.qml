@@ -14,11 +14,25 @@ Kirigami.Page {
         setlistId: root.setlistId
     }
 
-    ListView {
+    ColumnLayout {
         anchors.fill: parent
-        model: setlistView
-        delegate: Controls.Label {
-            text: model.name
+        Controls.Button {
+            text: qsTr("Add Song")
+            onClicked: {
+                var page = pageStack.push(Qt.resolvedUrl("song_selector.qml"));
+                page.songSelected.connect(function(songId) {
+                    setlistView.addSong(songId);
+                    pageStack.pop();
+                });
+            }
+        }
+        ListView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            model: setlistView
+            delegate: Controls.Label {
+                text: model.name
+            }
         }
     }
 }

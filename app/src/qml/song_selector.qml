@@ -8,9 +8,9 @@ Kirigami.Page {
     id: root
     title: qsTr("Song Selector")
 
-    signal songSelected(var songId)
+    signal songSelected(int songId)
 
-    SongGaleryList {
+    SongGalleryList {
         id: songList
     }
 
@@ -21,12 +21,10 @@ Kirigami.Page {
             Kirigami.Card {
                 actions: [
                     Kirigami.Action {
-                        text: qsTr("Open")
+                        text: qsTr("Select")
                         onTriggered: {
-                            root.songSelected(modelData);
-                            // pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {
-                            //     "songId": modelData.id
-                            // });
+                            root.songSelected(modelData.id);
+                            console.log('Trigger action!')
                         }
                     }
                 ]

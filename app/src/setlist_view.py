@@ -72,6 +72,24 @@ class SetlistView(QAbstractListModel):
         self.endResetModel()
         self.songsChanged.emit()
 
+
+    @Slot(int)
+    def addSong(self, song_id: int) -> None:
+        if self._setlist_id is None:
+            return
+        session = SessionLocal()
+        try:
+            assert song_id != None
+            assert self._setlist_id != None
+            session.add(SetlistSong(setlist_id=self._setlist_id, song_id=int(song_id)))
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        self.refresh()
+
     @Slot()
     def reload(self):
         self.refresh()
