@@ -61,6 +61,12 @@ Kirigami.ApplicationWindow {
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
+                    text: qsTr("Create Setlist")
+                    onClicked: pageStack.push(Qt.resolvedUrl("new_setlist.qml"))
+                }
+                Controls.Button {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
                     text: qsTr("Create Song")
                     onClicked: pageStack.push(Qt.resolvedUrl("new_song.qml"))
                 }
