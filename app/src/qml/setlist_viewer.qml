@@ -41,6 +41,7 @@ Kirigami.Page {
                 id: listItemRoot
 
                 required property int index
+                required property int id
                 required property string name
 
                 width: songList.width - songList.leftMargin - songList.rightMargin
@@ -60,6 +61,11 @@ Kirigami.Page {
                         Controls.Label {
                             Layout.fillWidth: true
                             text: listItemRoot.name
+                        }
+
+                        Controls.Button {
+                            text: qsTr("Open")
+                            onClicked: pageStack.push(Qt.resolvedUrl("song_viewer.qml"), { songId: listItemRoot.id })
                         }
                     }
                 }
