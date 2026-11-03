@@ -36,6 +36,10 @@ Kirigami.Page {
         id: autoCropper
         image: cameraPage.capturedImage
     }
+    AutoNamer {
+        id: autoNamer
+        image: autoCropper.croppedImage
+    }
 
     onPictureAccept: image => {
         let savedId = CameraBackend.saveCapture(image);
@@ -67,6 +71,9 @@ Kirigami.Page {
         anchors.centerIn: parent
 
         ColumnLayout {
+            Kirigami.Heading {
+                text: autoNamer.title ? autoNamer.title : "No title detected"
+            }
             Image {
                 source: cameraPage.previewUrl
                 fillMode: Image.PreserveAspectFit
@@ -74,7 +81,7 @@ Kirigami.Page {
                 Layout.preferredHeight: 240
             }
             Image {
-                source: autoCropper.croppedImage.isNull ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
+                source: autoCropper.croppedImage == null ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
                 fillMode: Image.PreserveAspectFit
                 Layout.preferredWidth: 320
                 Layout.preferredHeight: 240
