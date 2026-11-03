@@ -9,7 +9,7 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 
 @QmlElement
-class SongGaleryList(QObject):
+class SongGalleryList(QObject):
     songsChanged = Signal()
 
     def __init__(self, parent=None):

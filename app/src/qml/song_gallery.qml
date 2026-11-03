@@ -8,7 +8,7 @@ Kirigami.Page {
     id: root
     title: qsTr("Song Gallery")
 
-    SongGaleryList {
+    SongGalleryList {
         id: songList
     }
 
