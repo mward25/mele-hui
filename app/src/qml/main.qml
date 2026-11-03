@@ -67,6 +67,5 @@ Kirigami.ApplicationWindow {
             }
         }
     }
-    footer: Kirigami.NavigationTabBar {
-    }
+    footer: Kirigami.NavigationTabBar {}
 }

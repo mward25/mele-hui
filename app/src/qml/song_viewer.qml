@@ -9,7 +9,9 @@ Kirigami.Page {
     required property var songId
     title: qsTr("Song Viewer (" + (songView.song ? songView.song.name : "") + ")")
 
-    SongBackend { id: songBackend }
+    SongBackend {
+        id: songBackend
+    }
     SongView {
         id: songView
         songId: root.songId
