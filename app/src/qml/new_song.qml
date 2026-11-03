@@ -22,7 +22,7 @@ Kirigami.Page {
             Kirigami.FormData.isSection: true
         }
         Controls.TextField {
-            Kirigami.FormData.label: "Song Name:"
+            id: songNameField
             text: root.songName
             onTextChanged: root.songName = text
         }
@@ -35,8 +35,11 @@ Kirigami.Page {
             Kirigami.FormData.label: "Add Page:"
             onClicked: {
                 const page = pageStack.push(Qt.resolvedUrl("camera.qml"));
-                page.pictureSave.connect(id => {
+                page.pictureSave.connect((id, title) => {
                     songBackend.addPage(id);
+                    if (root.songName == "") {
+                        root.songName = title;
+                    }
                     pageStack.pop();
                 });
             }
