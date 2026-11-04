@@ -1,14 +1,28 @@
 import os
 from pathlib import Path
 
+from PySide6.QtCore import QCoreApplication, QStandardPaths
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .base import Base
 
+
+def _data_dir() -> Path:
+    try:
+        base = QStandardPaths.writableLocation(QStandardPaths.AppLocalDataLocation)
+    except Exception:
+        base = ""
+    if not base:
+        base = str(Path.home() / ".local" / "share" / "melehui")
+    p = Path(base)
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+
 DATABASE_URL = os.environ.get(
     "MELEHUI_DB_URL",
-    "sqlite:///" + str(Path(__file__).resolve().parents[2] / "melehui.db"),
+    "sqlite:///" + str(_data_dir() / "melehui.db"),
 )
 from sqlalchemy import event
 
