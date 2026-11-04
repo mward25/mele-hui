@@ -3,12 +3,29 @@
 import os
 from pathlib import Path
 
+from PySide6.QtCore import QStandardPaths
 from sqlalchemy import event
 from sqlalchemy.orm import Session
 
 from .file_store import FileStore
 
-STORAGE_ROOT = Path(os.environ.get("MELEHUI_STORAGE_ROOT", "storage")).resolve()
+
+def _data_dir() -> Path:
+    try:
+        base = QStandardPaths.writableLocation(QStandardPaths.AppLocalDataLocation)
+    except Exception:
+        base = ""
+    if not base:
+        base = str(Path.home() / ".local" / "share" / "melehui")
+    p = Path(base)
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+
+STORAGE_ROOT = Path(
+    os.environ.get("MELEHUI_STORAGE_ROOT", str(_data_dir() / "storage"))
+).resolve()
+STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
 
 _pending_deletions: list[Path] = []
 

@@ -1,0 +1,50 @@
+[build-system]
+
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+
+name = "com.trumpetrespas.melehui"
+version = "0.3.0"
+requires-python = ">=3.12"
+authors = [{name = "Miles Ward", email = "milesward2004@gmail.com"}]
+# maintainers = [{name = "Example Author", email = "example@author.org"}]
+description = "A simple sheet music reading program."
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Utilities",
+    "Programming Language :: Python",
+    "Operating System :: POSIX :: Linux",
+]
+keywords = ["viewer music"]
+urls = {Homepage = "https://github.com/mward25/mele-hui"}
+dependencies = [
+    "pyocr",
+    "opencv-python",
+    "sqlalchemy",
+    "alembic",
+    "PySide6"
+]
+
+
+[project.readme]
+
+file = "README.md"
+content-type = "text/markdown"
+
+[project.scripts]
+melehui = "melehui_app:main"
+
+[tool.setuptools]
+package-dir = {"" = "app/src"}
+include-package-data = true
+py-modules = ["melehui_app"]
+
+[tool.setuptools.packages.find]
+where = ["app/src"]
+
+

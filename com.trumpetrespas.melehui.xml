@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>com.trumpetrespas.melehui</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Mele Hui</name>
+  <summary>A simple sheet music reading program.</summary>
+  <description>
+    <p>A simple sheet music reading program.</p>
+  </description>
+  <url type="homepage">https://github.com/mward25/mele-hui</url>
+  <releases>
+    <release version="0.3.0" date="2026-11-03">
+      <description>
+        <p>## v0.3.0
+
+### 🚀 Features
+
+- Add setlists menu
+- Setlist Gallery
+- Add song picking menu
+- Add Setlist Viewer menu
+- Add songs to setlist.
+- Re-ordering songs in a setlist
+- Open songs from Setlist menu
+
+### 🐛 Bug Fixes
+
+- Add initial schema
+
+### 📚 Documentation
+
+- Update plan
+- Update plan
+- Update plan
+- Update Plan
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix typo (Galery to Gallery)</p>
+      </description>
+    </release>
+  </releases>
+  <provides>
+    <binary>melehui</binary>
+  </provides>
+</component>
