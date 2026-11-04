@@ -51,6 +51,9 @@ def main():
     if not os.environ.get("QT_QUICK_CONTROLS_STYLE"):
         os.environ["QT_QUICK_CONTROLS_STYLE"] = "org.kde.desktop"
 
+    for _qp in ("/usr/lib/qt6/qml", "/usr/lib/x86_64-linux-gnu/qt6/qml"):
+        if os.path.isdir(_qp):
+            engine.addImportPath(_qp)
     base_path = os.path.abspath(os.path.dirname(__file__))
     url = QUrl(f"file://{base_path}/qml/main.qml")
     engine.load(url)
