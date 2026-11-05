@@ -37,7 +37,7 @@ file = "README.md"
 content-type = "text/markdown"
 
 [project.scripts]
-melehui = "melehui_app:main"
+main = "main:main"
 
 [tool.setuptools]
 package-dir = {"" = "app/src"}
