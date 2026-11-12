@@ -32,10 +32,10 @@ Kirigami.Page {
         }
     }
 
-    onPictureAccept: image => {
+    onPictureAccept: (image, title) => {
         let savedId = CameraBackend.saveCapture(image);
         cameraPage.capturedImage = null;
-        pictureSave(savedId, autoNamer.title);
+        pictureSave(savedId, title);
     }
 
     ColumnLayout {
@@ -57,8 +57,8 @@ Kirigami.Page {
 
     PageConfirmDialog {
         id: saveDialog
-        cameraPage: cameraPage
         image: cameraPage.capturedImage
         previewUrl: cameraPage.previewUrl
+        onPictureAccept: (image, title) => cameraPage.pictureAccept(image, title)
     }
 }

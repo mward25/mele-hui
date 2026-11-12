@@ -62,7 +62,7 @@ files = [
     "app/src/song_view.py",
 
     # QML Files
-    "app/src/qml/camera.qml",
+    "app/src/qml/Camera.qml",
     "app/src/qml/DrawingOverlay.qml",
     "app/src/qml/ImagePicker.qml",
     "app/src/qml/main.qml",

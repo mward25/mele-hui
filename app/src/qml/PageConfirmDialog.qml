@@ -8,7 +8,8 @@ import MeleHui 1.0
 Kirigami.Dialog {
     id: root
 
-    required property var cameraPage
+    signal pictureAccept(var image, var title)
+
     property var image: null
     property string previewUrl: ""
 
@@ -51,14 +52,14 @@ Kirigami.Dialog {
         Kirigami.Action {
             text: qsTr("Yes, cropped")
             onTriggered: {
-                root.cameraPage.pictureAccept(root.autoCropper.croppedImage);
+                root.pictureAccept(root.autoCropper.croppedImage, root.autoNamer.title);
                 root.close();
             }
         },
         Kirigami.Action {
             text: qsTr("Yes, uncropped")
             onTriggered: {
-                root.cameraPage.pictureAccept(root.cameraPage.capturedImage);
+                root.pictureAccept(root.image, root.autoNamer.title);
                 root.close();
             }
         },
@@ -67,7 +68,4 @@ Kirigami.Dialog {
             onTriggered: root.close()
         }
     ]
-
-    onClosed: if (root.cameraPage)
-        root.cameraPage.capturedImage = null
 }
