@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
 import os
+from PySide6 import QtCore as _QtCore
+
+os.environ.setdefault(
+    "QT_QPA_PLATFORM_PLUGIN_PATH",
+    os.path.join(os.path.dirname(_QtCore.__file__), "Qt", "plugins"),
+)
 import sys
 import signal
 
@@ -21,6 +27,12 @@ from setlist_backend import SetlistBackend
 from setlist_view import SetlistView
 from PySide6.QtQml import qmlRegisterType
 from db.session import init_db
+
+from PySide6 import QtCore as _QtCore2
+
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.join(
+    os.path.dirname(_QtCore2.__file__), "Qt", "plugins"
+)
 
 
 def main():

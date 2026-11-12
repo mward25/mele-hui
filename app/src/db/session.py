@@ -46,8 +46,8 @@ def init_db():
     from alembic import command as alembic_command
     import os
 
-    app_root = Path(__file__).resolve().parents[2]
-    cfg = Config(str(app_root / "alembic.ini"))
+    app_root = Path(__file__).resolve().parent
+    cfg = Config()
     cfg.set_main_option("script_location", str(app_root / "migrations"))
     cfg.set_main_option("sqlalchemy.url", DATABASE_URL)
     alembic_command.upgrade(cfg, "head")

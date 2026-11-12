@@ -1,0 +1,43 @@
+{
+  "app-id": "com.trumpetrespas.melehui",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.10",
+  "sdk": "org.kde.Sdk",
+  "base": "io.qt.PySide.BaseApp",
+  "base-version": "6.10",
+  "command": "melehui",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--filesystem=home",
+    "--env=QT_QPA_PLATFORM_PLUGIN_PATH=/app/lib/python3.11/site-packages/PySide6/Qt/plugins"
+  ],
+  "modules": [
+    {
+      "name": "melehui",
+      "buildsystem": "simple",
+      "build-commands": [
+        "pip3 install --no-build-isolation --prefix=/app .",
+        "install -Dm644 com.trumpetrespas.melehui.svg /app/share/icons/hicolor/scalable/apps/com.trumpetrespas.melehui.svg",
+        "mkdir -p /app/share/applications && printf '%s\\n' '[Desktop Entry]' 'Name=Mele Hui' 'Exec=melehui' 'Type=Application' 'Terminal=false' 'Categories=Audio;Music;' 'Icon=com.trumpetrespas.melehui' > /app/share/applications/com.trumpetrespas.melehui.desktop",
+        "install -Dm644 com.trumpetrespas.melehui.xml /app/share/metainfo/com.trumpetrespas.melehui.metainfo.xml"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "."
+        }
+      ]
+    }
+  ],
+  "cleanup-commands": [
+    "/app/cleanup-BaseApp.sh"
+  ],
+  "build-options": {
+    "build-args": [
+      "--share=network"
+    ]
+  }
+}
