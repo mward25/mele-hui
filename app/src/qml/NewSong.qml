@@ -31,7 +31,8 @@ Kirigami.Page {
             Kirigami.FormData.isSection: true
         }
         Controls.Button {
-            text: "Add page"
+            text: "From Camera"
+            icon.name: "camera-symbolic"
             Kirigami.FormData.label: "Add Page:"
             onClicked: {
                 const page = pageStack.push(Qt.resolvedUrl("camera.qml"));

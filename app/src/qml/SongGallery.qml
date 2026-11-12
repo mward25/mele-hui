@@ -21,7 +21,7 @@ Kirigami.Page {
                     Kirigami.Action {
                         text: qsTr("Open")
                         onTriggered: {
-                            pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {
+                            pageStack.push(Qt.resolvedUrl("SongViewer.qml"), {
                                 "songId": modelData.id
                             });
                         }

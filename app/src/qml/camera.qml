@@ -32,15 +32,6 @@ Kirigami.Page {
         }
     }
 
-    AutoCropper {
-        id: autoCropper
-        image: cameraPage.capturedImage
-    }
-    AutoNamer {
-        id: autoNamer
-        image: autoCropper.croppedImage
-    }
-
     onPictureAccept: image => {
         let savedId = CameraBackend.saveCapture(image);
         cameraPage.capturedImage = null;
@@ -64,52 +55,10 @@ Kirigami.Page {
         }
     }
 
-    Kirigami.Dialog {
+    PageConfirmDialog {
         id: saveDialog
-        title: qsTr("Save Picture")
-        modal: true
-        anchors.centerIn: parent
-
-        ColumnLayout {
-            Kirigami.Heading {
-                text: autoNamer.title ? autoNamer.title : "No title detected"
-            }
-            Image {
-                source: cameraPage.previewUrl
-                fillMode: Image.PreserveAspectFit
-                Layout.preferredWidth: 320
-                Layout.preferredHeight: 240
-            }
-            Image {
-                source: autoCropper.croppedImage == null ? "" : CameraBackend.imageToDataUrl(autoCropper.croppedImage)
-                fillMode: Image.PreserveAspectFit
-                Layout.preferredWidth: 320
-                Layout.preferredHeight: 240
-            }
-        }
-        standardButtons: Kirigami.Dialog.NoButton
-        flatFooterButtons: false
-        customFooterActions: [
-            Kirigami.Action {
-                text: qsTr("Yes, cropped")
-                onTriggered: {
-                    cameraPage.pictureAccept(autoCropper.croppedImage);
-                    saveDialog.close();
-                }
-            },
-            Kirigami.Action {
-                text: qsTr("Yes, uncropped")
-                onTriggered: {
-                    cameraPage.pictureAccept(cameraPage.capturedImage);
-                    saveDialog.close();
-                }
-            },
-            Kirigami.Action {
-                text: qsTr("No, Retake")
-                onTriggered: saveDialog.close()
-            }
-        ]
-
-        onClosed: cameraPage.capturedImage = null
+        cameraPage: cameraPage
+        image: cameraPage.capturedImage
+        previewUrl: cameraPage.previewUrl
     }
 }

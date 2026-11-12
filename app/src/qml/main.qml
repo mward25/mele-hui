@@ -56,25 +56,25 @@ Kirigami.ApplicationWindow {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     text: qsTr("View Setlists")
-                    onClicked: pageStack.push(Qt.resolvedUrl("setlist_gallery.qml"))
+                    onClicked: pageStack.push(Qt.resolvedUrl("SetlistGallery.qml"))
                 }
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     text: qsTr("View Songs")
-                    onClicked: pageStack.push(Qt.resolvedUrl("song_gallery.qml"))
+                    onClicked: pageStack.push(Qt.resolvedUrl("SongGallery.qml"))
                 }
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     text: qsTr("Create Setlist")
-                    onClicked: pageStack.push(Qt.resolvedUrl("new_setlist.qml"))
+                    onClicked: pageStack.push(Qt.resolvedUrl("NewSetlist.qml"))
                 }
                 Controls.Button {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     text: qsTr("Create Song")
-                    onClicked: pageStack.push(Qt.resolvedUrl("new_song.qml"))
+                    onClicked: pageStack.push(Qt.resolvedUrl("NewSong.qml"))
                 }
             }
         }
