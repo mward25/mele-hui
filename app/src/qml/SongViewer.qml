@@ -17,16 +17,20 @@ Kirigami.ScrollablePage {
         songId: root.songId
     }
 
-    header: DrawingToolbar {
-        target: pageList.currentItem
-    }
     ListView {
         id: pageList
+        focus: true
         anchors.fill: parent
         visible: songView.pages && songView.pages.length > 0
         orientation: ListView.Vertical
         snapMode: ListView.NoSnap
-        interactive: true
+        interactive: !(pageList.currentItem && pageList.currentItem.drawingTool !== "none")
+        Keys.onPressed: event => {
+            if (event.key === Qt.Key_PageUp)
+                contentY = Math.max(0, contentY - height / 2);
+            else if (event.key === Qt.Key_PageDown)
+                contentY = Math.min(contentHeight - height, contentY + height / 2);
+        }
         clip: true
         model: songView.pages
         delegate: Item {
@@ -37,13 +41,15 @@ Kirigami.ScrollablePage {
             Image {
                 id: pageImage
                 anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
+                fillMode: Image.Stretch
                 source: modelData.file_path
             }
             DrawingOverlay {
                 id: drawingOverlay
                 anchors.fill: pageImage
+                onActivated: pageList.currentIndex = index
                 pageId: modelData.id
+                pageIndex: index
                 backend: songBackend
             }
         }
