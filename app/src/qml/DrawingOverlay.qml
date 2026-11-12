@@ -6,6 +6,7 @@ import MeleHui 1.0
 Item {
     id: root
     property int pageId: 0
+    property int pageIndex: 0
     property var backend: null
     property string tool: "none"
     property bool drawingActive: false
@@ -16,6 +17,7 @@ Item {
     property string currentStroke: ""
 
     signal svgChanged(string svg)
+    signal activated
 
     function loadSvg(svg) {
         if (backend !== null)
@@ -53,9 +55,9 @@ Item {
                 if (!s.points || s.points.length < 2)
                     continue;
                 ctx.beginPath();
-                ctx.moveTo(s.points[0].x, s.points[0].y);
+                ctx.moveTo(s.points[0].x * canvas.width, s.points[0].y * canvas.height);
                 for (let j = 1; j < s.points.length; j++)
-                    ctx.lineTo(s.points[j].x, s.points[j].y);
+                    ctx.lineTo(s.points[j].x * canvas.width, s.points[j].y * canvas.height);
                 if (s.mode === "eraser") {
                     ctx.globalCompositeOperation = "destination-out";
                     ctx.lineWidth = root.penWidth * 2;
@@ -76,14 +78,17 @@ Item {
         anchors.fill: parent
         preventStealing: true
         onPressed: mouse => {
+            root.activated();
             if (root.tool === "none")
                 return;
             root.drawingActive = true;
             root.currentStroke = root.tool;
+            let w = Math.max(1, canvas.width);
+            let h = Math.max(1, canvas.height);
             let pts = [
                 {
-                    x: mouse.x,
-                    y: mouse.y
+                    x: mouse.x / w,
+                    y: mouse.y / h
                 }
             ];
             root.strokes.push({
@@ -95,9 +100,11 @@ Item {
             if (!pressed || root.tool === "none")
                 return;
             let last = root.strokes[root.strokes.length - 1];
+            let w2 = Math.max(1, canvas.width);
+            let h2 = Math.max(1, canvas.height);
             last.points.push({
-                x: mouse.x,
-                y: mouse.y
+                x: mouse.x / w2,
+                y: mouse.y / h2
             });
             canvas.requestPaint();
         }
@@ -105,7 +112,24 @@ Item {
             if (!root.drawingActive)
                 return;
             root.drawingActive = false;
+            canvas.requestPaint();
             root.save();
+        }
+    }
+    Row {
+        visible: parent.parent.ListView.view.currentIndex === root.pageIndex
+        spacing: 8
+        Controls.Button {
+            text: root.tool === "pen" ? "Pen ✓" : "Pen"
+            onClicked: root.tool = (root.tool === "pen" ? "none" : "pen")
+        }
+        Controls.Button {
+            text: root.tool === "eraser" ? "Erase ✓" : "Erase"
+            onClicked: root.tool = (root.tool === "eraser" ? "none" : "eraser")
+        }
+        Controls.Button {
+            text: "Clear"
+            onClicked: root.clear()
         }
     }
 }
