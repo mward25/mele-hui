@@ -22,9 +22,7 @@ def _data_dir() -> Path:
     return p
 
 
-STORAGE_ROOT = Path(
-    os.environ.get("MELEHUI_STORAGE_ROOT", str(_data_dir() / "storage"))
-).resolve()
+STORAGE_ROOT = Path(os.environ.get("MELEHUI_STORAGE_ROOT", str(_data_dir() / "storage"))).resolve()
 STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
 
 _pending_deletions: list[Path] = []

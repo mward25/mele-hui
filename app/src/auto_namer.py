@@ -1,15 +1,12 @@
 """AutoNamer: QML element that returns the calculated name of a
 piece of paper.."""
 
-from PySide6.QtCore import QObject, Signal, Property
+import numpy as np
+import pyocr
+from PIL import Image
+from PySide6.QtCore import Property, QObject, Signal
 from PySide6.QtGui import QImage
 from PySide6.QtQml import QmlElement
-
-from PIL import Image
-import pyocr
-
-import cv2
-import numpy as np
 
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1
@@ -55,14 +52,10 @@ class AutoNamer(QObject):
         h, w = qimg.height(), qimg.width()
         bpl = qimg.bytesPerLine()
         # Image as array for cv2
-        arr = (
-            np.frombuffer(qimg.constBits(), dtype=np.uint8)
-            .reshape((h, bpl))[:, : w * 3]
-            .reshape((h, w, 3))
-        )
+        arr = np.frombuffer(qimg.constBits(), dtype=np.uint8).reshape((h, bpl))[:, : w * 3].reshape((h, w, 3))
         # Extract to pillow format
         pill_img = Image.fromarray(arr)
-        print(f"Setting title")
+        print("Setting title")
         self._title = tool.image_to_string(
             pill_img,
             # @TODO Other languages.

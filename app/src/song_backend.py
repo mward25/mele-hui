@@ -1,8 +1,7 @@
-from PySide6.QtCore import QObject, Slot, Signal, Property
-from PySide6.QtQml import QmlElement
-
-from db import Song, Page
+from db import Page, Song
 from db.session import SessionLocal
+from PySide6.QtCore import Property, QObject, Signal, Slot
+from PySide6.QtQml import QmlElement
 
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1
@@ -59,10 +58,7 @@ class SongBackend(QObject):
     def strokesToSvg(self, width: int, height: int, strokes) -> str:
         width = width or 1
         height = height or 1
-        out = [
-            "<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>"
-            % (width, height)
-        ]
+        out = ["<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>" % (width, height)]
         for stroke in strokes or []:
             pts = stroke.get("points") if isinstance(stroke, dict) else None
             if not pts or len(pts) < 2:
@@ -72,14 +68,10 @@ class SongBackend(QObject):
             for pt in pts[1:]:
                 d += " L %s %s" % (pt["x"], pt["y"])
             if mode == "erase":
-                out.append(
-                    "<path d='%s' fill='none' stroke='none' stroke-width='0' data-mode='erase'/>"
-                    % d
-                )
+                out.append("<path d='%s' fill='none' stroke='none' stroke-width='0' data-mode='erase'/>" % d)
             else:
                 out.append(
-                    "<path d='%s' fill='none' stroke='#e01b24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' data-mode='pen'/>"
-                    % d
+                    "<path d='%s' fill='none' stroke='#e01b24' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' data-mode='pen'/>" % d
                 )
         out.append("</svg>")
         return "".join(out)
@@ -89,9 +81,7 @@ class SongBackend(QObject):
         import re
 
         strokes = []
-        for m in re.finditer(
-            r"<path[^>]*d='([^']*)'[^>]*data-mode='([^']*)'", svg or ""
-        ):
+        for m in re.finditer(r"<path[^>]*d='([^']*)'[^>]*data-mode='([^']*)'", svg or ""):
             d = m.group(1)
             mode = m.group(2)
             pts = []

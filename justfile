@@ -6,3 +6,4 @@ run: build-pyside-project
 
 lint:
     uv run pyside6-project qmllint
+    prek run --all-files

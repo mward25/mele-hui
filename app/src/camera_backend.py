@@ -1,15 +1,11 @@
 """Python camera capture backend wired from camera.qml."""
 
-import os
 import uuid
-from pathlib import Path
-
-from PySide6.QtCore import QObject, Slot, QBuffer, QIODevice, QByteArray
-from PySide6.QtGui import QImage
 
 from db import FileStore
 from db.session import SessionLocal
-from db.events import STORAGE_ROOT
+from PySide6.QtCore import QBuffer, QIODevice, QObject, Slot
+from PySide6.QtGui import QImage
 
 
 class CameraBackend(QObject):
@@ -30,7 +26,6 @@ class CameraBackend(QObject):
             session.add(fs)
             session.flush()  # populate fs.id
             print(f"Python ID: {fs.id}")
-            return_val = fs.id
 
             out_path = fs.full_path
             out_path.parent.mkdir(parents=True, exist_ok=True)
