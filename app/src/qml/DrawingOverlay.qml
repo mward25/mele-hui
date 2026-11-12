@@ -7,7 +7,7 @@ Item {
     id: root
     property int pageId: 0
     property var backend: null
-    property string tool: "none"  // "none" | "pen" | "eraser"
+    property string tool: "none"
     property bool drawingActive: false
     property real penWidth: 3
     property string penColor: "#111111"
@@ -74,6 +74,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
+        preventStealing: true
         onPressed: mouse => {
             if (root.tool === "none")
                 return;
@@ -105,22 +106,6 @@ Item {
                 return;
             root.drawingActive = false;
             root.save();
-        }
-    }
-
-    Row {
-        spacing: 8
-        Controls.Button {
-            text: root.tool === "pen" ? "Pen ✓" : "Pen"
-            onClicked: root.tool = (root.tool === "pen" ? "none" : "pen")
-        }
-        Controls.Button {
-            text: root.tool === "eraser" ? "Erase ✓" : "Erase"
-            onClicked: root.tool = (root.tool === "eraser" ? "none" : "eraser")
-        }
-        Controls.Button {
-            text: "Clear"
-            onClicked: root.clear()
         }
     }
 }

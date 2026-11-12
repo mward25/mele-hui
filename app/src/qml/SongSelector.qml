@@ -14,23 +14,29 @@ Kirigami.Page {
         id: songList
     }
 
-    Kirigami.CardsLayout {
+    Flickable {
         anchors.fill: parent
-        Repeater {
-            model: songList.songs
-            Kirigami.Card {
-                actions: [
-                    Kirigami.Action {
-                        text: qsTr("Select")
-                        onTriggered: {
-                            root.songSelected(modelData.id);
-                            console.log('Trigger action!');
+        contentWidth: width
+        contentHeight: cards.implicitHeight
+        Kirigami.CardsLayout {
+            id: cards
+            width: parent.width
+            Repeater {
+                model: songList.songs
+                Kirigami.Card {
+                    actions: [
+                        Kirigami.Action {
+                            text: qsTr("Select")
+                            onTriggered: {
+                                root.songSelected(modelData.id);
+                                console.log('Trigger action!');
+                            }
                         }
+                    ]
+                    banner {
+                        source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
+                        title: modelData.name
                     }
-                ]
-                banner {
-                    source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
-                    title: modelData.name
                 }
             }
         }
