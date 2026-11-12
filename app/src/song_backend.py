@@ -19,7 +19,7 @@ class SongBackend(QObject):
     def _get_pages(self):
         return list(self._pages)
 
-    pages = Property("QVariantList", _get_pages, notify=pagesChanged)
+    pages = Property(list, _get_pages, notify=pagesChanged)
 
     @Slot(int)
     def addPage(self, page_id: int) -> None:

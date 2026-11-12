@@ -20,7 +20,7 @@ class SetlistGalleryList(QObject):
     def _get_setlists(self):
         return list(self._setlists)
 
-    setlists = Property("QVariantList", _get_setlists, notify=setlistsChanged)
+    setlists = Property(list, _get_setlists, notify=setlistsChanged)
 
     def get_first_page_or_nil(self, s):
         first_page = s.pages

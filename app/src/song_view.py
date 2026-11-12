@@ -39,9 +39,9 @@ class SongView(QObject):
         self.songIdChanged.emit()
         self.reload()
 
-    song = Property("QVariantMap", _get_song, notify=songChanged)
-    pages = Property("QVariantList", _get_pages, notify=songChanged)
-    songId = Property("int", _get_song_id, _set_song_id, notify=songIdChanged)
+    song = Property(dict, _get_song, notify=songChanged)
+    pages = Property(list, _get_pages, notify=songChanged)
+    songId = Property(int, _get_song_id, _set_song_id, notify=songIdChanged)
 
     def __init__(self, parent=None):
         super().__init__(parent)

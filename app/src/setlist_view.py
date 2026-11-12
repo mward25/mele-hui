@@ -39,9 +39,7 @@ class SetlistView(QAbstractListModel):
         self.setlistIdChanged.emit()
         self.reload()
 
-    setlistId = Property(
-        "int", _get_setlist_id, _set_setlist_id, notify=setlistIdChanged
-    )
+    setlistId = Property(int, _get_setlist_id, _set_setlist_id, notify=setlistIdChanged)
 
     def rowCount(self, parent=QModelIndex()):
         return len(self._songs)

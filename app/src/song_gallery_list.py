@@ -20,7 +20,7 @@ class SongGalleryList(QObject):
     def _get_songs(self):
         return list(self._songs)
 
-    songs = Property("QVariantList", _get_songs, notify=songsChanged)
+    songs = Property(list, _get_songs, notify=songsChanged)
 
     def get_first_page_or_nil(self, s):
         first_page = s.pages

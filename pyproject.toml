@@ -47,4 +47,31 @@ py-modules = ["melehui_app"]
 [tool.setuptools.packages.find]
 where = ["app/src"]
 
+[tool.pyside6-project]
+files = [
+    # Python Files
+    "app/src/auto_cropper.py",
+    "app/src/auto_namer.py",
+    "app/src/camera_backend.py",
+    "app/src/melehui_app.py",
+    "app/src/setlist_backend.py",
+    "app/src/setlist_gallery_list.py",
+    "app/src/setlist_view.py",
+    "app/src/song_backend.py",
+    "app/src/song_gallery_list.py",
+    "app/src/song_view.py",
 
+    # QML Files
+    "app/src/qml/camera.qml",
+    "app/src/qml/DrawingOverlay.qml",
+    "app/src/qml/image_picker.qml",
+    "app/src/qml/main.qml",
+    "app/src/qml/new_setlist.qml",
+    "app/src/qml/new_song.qml",
+    "app/src/qml/page_confirm_dialog.qml",
+    "app/src/qml/setlist_gallery.qml",
+    "app/src/qml/setlist_viewer.qml",
+    "app/src/qml/song_gallery.qml",
+    "app/src/qml/song_selector.qml",
+    "app/src/qml/song_viewer.qml"
+]
