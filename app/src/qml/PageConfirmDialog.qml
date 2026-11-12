@@ -11,11 +11,12 @@ Kirigami.Dialog {
     signal pictureAccept(var image, var title)
 
     property var image: null
+    property int orientation: 0
     property string previewUrl: ""
 
     AutoCropper {
         id: defaultCropper
-        image: root.image
+        image: CameraBackend.rotateImage(root.image, root.orientation)
     }
     AutoNamer {
         id: defaultAutoNamer
@@ -35,6 +36,8 @@ Kirigami.Dialog {
         }
         Image {
             source: root.previewUrl
+            rotation: root.orientation
+            transformOrigin: Image.Center
             fillMode: Image.PreserveAspectFit
             Layout.preferredWidth: 320
             Layout.preferredHeight: 240

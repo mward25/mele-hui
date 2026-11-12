@@ -44,7 +44,7 @@ Kirigami.Page {
 
     PageConfirmDialog {
         id: saveDialog
-        image: CameraBackend.loadImage(image.source)
+        image: CameraBackend.rotateImage(CameraBackend.loadImage(image.source), 0)
         previewUrl: image.source
         onPictureAccept: (image, title) => root.pictureAccept(image, title)
     }
