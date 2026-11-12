@@ -75,3 +75,7 @@ files = [
     "app/src/qml/SongSelector.qml",
     "app/src/qml/SongViewer.qml"
 ]
+[tool.setuptools.data-files]
+"share/applications" = ["com.trumpetres.melehui.desktop"]
+"share/icons/hicolor/scalable/apps" = ["com.trumpetrespas.melehui.svg"]
+"share/metainfo" = ["com.trumpetrespas.melehui.xml"]
