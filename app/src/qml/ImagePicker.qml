@@ -26,6 +26,7 @@ Kirigami.Page {
         QQC2Dialogs.FileDialog {
             id: fileDialog
             currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+            nameFilters: ["Image files (*.png *.jpg *.jpeg *.bmp *.gif *.svg)"]
             onAccepted: {
                 image.source = selectedFile;
                 saveDialog.previewUrl = selectedFile;
