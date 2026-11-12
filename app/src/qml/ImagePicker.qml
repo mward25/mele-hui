@@ -31,6 +31,10 @@ Kirigami.Page {
                 saveDialog.previewUrl = selectedFile;
                 saveDialog.open();
             }
+            onRejected: {
+                /// On reject, just exit this page (assume it was user mistake)
+                pageStack.pop();
+            }
             Component.onCompleted: {
                 Qt.callLater(fileDialog.open);
             }
