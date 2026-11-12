@@ -22,12 +22,12 @@ class SetlistGalleryList(QObject):
     setlists = Property(list, _get_setlists, notify=setlistsChanged)
 
     def get_first_page_or_nil(self, s):
-        first_page = s.pages
-        if len(s.pages) > 0:
-            first_page = QUrl.fromLocalFile(s.pages[0].file_store.full_path)
-        else:
-            first_page = None
-        return first_page
+        for ss in s.setlist_songs or []:
+            song = getattr(ss, "song", None)
+            pages = getattr(song, "pages", None) if song else None
+            if pages:
+                return QUrl.fromLocalFile(pages[0].file_store.full_path)
+        return None
 
     def refresh(self):
         session = SessionLocal()
@@ -37,8 +37,7 @@ class SetlistGalleryList(QObject):
                 {
                     "id": s.id,
                     "name": s.name,
-                    # "pageCount": len(s.pages),
-                    # "first_page_img_path": self.get_first_page_or_nil(s),
+                    "first_page_img_path": self.get_first_page_or_nil(s),
                 }
                 for s in rows
             ]

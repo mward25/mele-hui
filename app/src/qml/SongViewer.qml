@@ -4,7 +4,7 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 import MeleHui 1.0
 
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root
     required property var songId
     title: qsTr("Song Viewer (" + (songView.song ? songView.song.name : "") + ")")
@@ -17,20 +17,23 @@ Kirigami.Page {
         songId: root.songId
     }
 
+    header: DrawingToolbar {
+        target: pageList.currentItem
+    }
     ListView {
         id: pageList
         anchors.fill: parent
         visible: songView.pages && songView.pages.length > 0
-        orientation: ListView.Horizontal
-        snapMode: ListView.SnapOneItem
-        interactive: !(currentItem && currentItem.drawingActive)
-        highlightRangeMode: ListView.StrictlyEnforceRange
+        orientation: ListView.Vertical
+        snapMode: ListView.NoSnap
+        interactive: true
         clip: true
         model: songView.pages
         delegate: Item {
             width: pageList.width
-            height: pageList.height
+            height: (pageImage.sourceSize.width > 0) ? Math.round(pageList.width * pageImage.sourceSize.height / pageImage.sourceSize.width) : pageList.height
             property alias drawingActive: drawingOverlay.drawingActive
+            property alias drawingTool: drawingOverlay.tool
             Image {
                 id: pageImage
                 anchors.fill: parent

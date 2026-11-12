@@ -66,6 +66,7 @@ files = [
     # QML Files
     "app/src/qml/Camera.qml",
     "app/src/qml/DrawingOverlay.qml",
+    "app/src/qml/DrawingToolbar.qml",
     "app/src/qml/ImagePicker.qml",
     "app/src/qml/PdfPicker.qml",
     "app/src/qml/main.qml",
