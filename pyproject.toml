@@ -27,7 +27,9 @@ dependencies = [
     "opencv-python",
     "sqlalchemy",
     "alembic",
-    "PySide6"
+    "PySide6",
+    "pikepdf>=10.18.0",
+    "pymupdf>=2.1",
 ]
 
 
@@ -65,6 +67,7 @@ files = [
     "app/src/qml/Camera.qml",
     "app/src/qml/DrawingOverlay.qml",
     "app/src/qml/ImagePicker.qml",
+    "app/src/qml/PdfPicker.qml",
     "app/src/qml/main.qml",
     "app/src/qml/NewSetlist.qml",
     "app/src/qml/NewSong.qml",

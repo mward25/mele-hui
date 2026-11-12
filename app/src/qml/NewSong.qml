@@ -59,6 +59,19 @@ Kirigami.Page {
                 });
             }
         }
+        Controls.Button {
+            icon.name: "emblem-documents-symbolic"
+            text: "From PDF"
+            onClicked: {
+                const page = pageStack.push(Qt.resolvedUrl("PdfPicker.qml"));
+                page.pictureSave.connect((id, title) => {
+                    songBackend.addPage(id);
+                    if (root.songName == "" && title) {
+                        root.songName = title;
+                    }
+                });
+            }
+        }
         Controls.Label {
             text: "Pages added: " + songBackend.pages.length
         }

@@ -2,6 +2,7 @@
 
 import uuid
 
+import pymupdf as fitz
 from db import FileStore
 from db.session import SessionLocal
 from PySide6.QtCore import QBuffer, QIODevice, QObject, QUrl, Slot
@@ -9,6 +10,20 @@ from PySide6.QtGui import QImage, QTransform
 
 
 class CameraBackend(QObject):
+    @Slot(QUrl, result="QVariantList")
+    def pdfToImages(self, source: QUrl) -> list[QImage]:
+        images = []
+        doc = fitz.open(source.toLocalFile())
+        try:
+            for page in doc:
+                print("Adding page")
+                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
+                qimg = QImage(pix.samples, pix.width, pix.height, pix.stride, QImage.Format.Format_RGB888)
+                images.append(qimg.copy())
+        finally:
+            doc.close()
+        return images
+
     @Slot(QImage, int, result=QImage)
     def rotateImage(self, image: QImage, degrees: int) -> QImage:
         if image is None or image.isNull():
