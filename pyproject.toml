@@ -75,6 +75,11 @@ files = [
     "app/src/qml/SongSelector.qml",
     "app/src/qml/SongViewer.qml"
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.5",
+]
 [tool.setuptools.data-files]
 "share/applications" = ["com.trumpetres.melehui.desktop"]
 "share/icons/hicolor/scalable/apps" = ["com.trumpetrespas.melehui.svg"]
