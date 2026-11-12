@@ -13,3 +13,8 @@ build-flatpak:
 
 deploy-flatpak: build-flatpak
     flatpak build-bundle build-dir melehui.flatpak com.trumpetrespas.melehui
+#build-flatpak:
+#    flatpak-builder --user --force-clean --install-deps-from=flathub build-dir com.trumpetrespas.melehui.json
+#
+run-flatpak:
+    flatpak run com.trumpetrespas.melehui

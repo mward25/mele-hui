@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 name = "com.trumpetrespas.melehui"
 version = "0.3.0"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 authors = [{name = "Miles Ward", email = "milesward2004@gmail.com"}]
 # maintainers = [{name = "Example Author", email = "example@author.org"}]
 description = "A simple sheet music reading program."
@@ -44,7 +44,7 @@ melehui = "melehui_app:main"
 [tool.setuptools]
 package-dir = {"" = "app/src"}
 include-package-data = true
-py-modules = ["melehui_app"]
+py-modules = ["auto_cropper", "auto_namer", "camera_backend", "melehui_app", "setlist_backend", "setlist_gallery_list", "setlist_view", "song_backend", "song_gallery_list", "song_view"]
 
 [tool.setuptools.packages.find]
 where = ["app/src"]
@@ -84,7 +84,12 @@ files = [
 dev = [
     "ruff>=0.17.5",
 ]
+
 [tool.setuptools.data-files]
 "share/applications" = ["com.trumpetres.melehui.desktop"]
 "share/icons/hicolor/scalable/apps" = ["com.trumpetrespas.melehui.svg"]
 "share/metainfo" = ["com.trumpetrespas.melehui.xml"]
+
+[tool.setuptools.package-data]
+db = ["migrations/*", "migrations/**/*"]
+qml = ["*.qml"]
