@@ -5,10 +5,16 @@ import uuid
 from db import FileStore
 from db.session import SessionLocal
 from PySide6.QtCore import QBuffer, QIODevice, QObject, QUrl, Slot
-from PySide6.QtGui import QImage
+from PySide6.QtGui import QImage, QTransform
 
 
 class CameraBackend(QObject):
+    @Slot(QImage, int, result=QImage)
+    def rotateImage(self, image: QImage, degrees: int) -> QImage:
+        if image is None or image.isNull():
+            return image
+        return image.transformed(QTransform().rotate(degrees))
+
     @Slot(QUrl, result=QImage)
     def loadImage(self, source: QUrl) -> QImage:
         return QImage(source.toLocalFile())

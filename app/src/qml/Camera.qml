@@ -14,6 +14,7 @@ Kirigami.Page {
 
     property var capturedImage: null
     property string previewUrl: ""
+    property int orientation: 0
 
     CaptureSession {
         id: captureSession
@@ -41,8 +42,16 @@ Kirigami.Page {
     ColumnLayout {
         anchors.fill: parent
 
+        Controls.Button {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
+            text: qsTr("Rotate Camera")
+            onClicked: cameraPage.orientation = (cameraPage.orientation + 90) % 360
+        }
+
         VideoOutput {
             id: viewfinder
+            orientation: cameraPage.orientation
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
@@ -59,6 +68,7 @@ Kirigami.Page {
         id: saveDialog
         image: cameraPage.capturedImage
         previewUrl: cameraPage.previewUrl
-        onPictureAccept: (image, title) => cameraPage.pictureAccept(image, title)
+        orientation: cameraPage.orientation
+        onPictureAccept: (image, title) => cameraPage.pictureAccept(CameraBackend.rotateImage(image, cameraPage.orientation), title)
     }
 }
