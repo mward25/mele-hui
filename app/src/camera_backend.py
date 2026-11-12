@@ -4,11 +4,15 @@ import uuid
 
 from db import FileStore
 from db.session import SessionLocal
-from PySide6.QtCore import QBuffer, QIODevice, QObject, Slot
+from PySide6.QtCore import QBuffer, QIODevice, QObject, QUrl, Slot
 from PySide6.QtGui import QImage
 
 
 class CameraBackend(QObject):
+    @Slot(QUrl, result=QImage)
+    def loadImage(self, source: QUrl) -> QImage:
+        return QImage(source.toLocalFile())
+
     @Slot(QImage, result=str)
     def imageToDataUrl(self, image: QImage) -> str:
         buffer = QBuffer()

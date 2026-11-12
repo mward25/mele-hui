@@ -39,7 +39,7 @@ Kirigami.Page {
 
     PageConfirmDialog {
         id: saveDialog
-        image: image.source
+        image: CameraBackend.loadImage(image.source)
         previewUrl: image.source
         onPictureAccept: (image, title) => root.pictureAccept(image, title)
     }
