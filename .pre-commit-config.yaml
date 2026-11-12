@@ -8,9 +8,9 @@ repos:
         args: ["--inplace"]
         additional_dependencies:
           - PySide6-Essentials==6.11.0 # override version of Qt Python metapackagerepos:
-  # Using this mirror lets us use mypyc-compiled black, which is about 2x faster
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.10.1
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.5
     hooks:
-      - id: black
-        language_version: python3.14
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
