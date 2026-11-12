@@ -1,7 +1,13 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .file_store import FileStore
+    from .song import Song
 
 
 class Page(Base):

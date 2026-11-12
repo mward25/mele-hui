@@ -21,7 +21,7 @@ Kirigami.Page {
                     Kirigami.Action {
                         text: qsTr("Open")
                         onTriggered: {
-                            pageStack.push(Qt.resolvedUrl("setlist_viewer.qml"), {
+                            pageStack.push(Qt.resolvedUrl("SetlistViewer.qml"), {
                                 "setlistId": modelData.id
                             });
                         }

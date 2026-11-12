@@ -1,8 +1,7 @@
-from PySide6.QtCore import QObject, Signal, Property, Slot, QUrl
-from PySide6.QtQml import QmlElement
-
 from db import Setlist
 from db.session import SessionLocal
+from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
+from PySide6.QtQml import QmlElement
 
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1
@@ -20,7 +19,7 @@ class SetlistGalleryList(QObject):
     def _get_setlists(self):
         return list(self._setlists)
 
-    setlists = Property("QVariantList", _get_setlists, notify=setlistsChanged)
+    setlists = Property(list, _get_setlists, notify=setlistsChanged)
 
     def get_first_page_or_nil(self, s):
         first_page = s.pages

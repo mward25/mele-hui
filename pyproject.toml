@@ -47,4 +47,40 @@ py-modules = ["melehui_app"]
 [tool.setuptools.packages.find]
 where = ["app/src"]
 
+[tool.pyside6-project]
+files = [
+    # Python Files
+    "app/src/auto_cropper.py",
+    "app/src/auto_namer.py",
+    "app/src/camera_backend.py",
+    "app/src/melehui_app.py",
+    "app/src/setlist_backend.py",
+    "app/src/setlist_gallery_list.py",
+    "app/src/setlist_view.py",
+    "app/src/song_backend.py",
+    "app/src/song_gallery_list.py",
+    "app/src/song_view.py",
 
+    # QML Files
+    "app/src/qml/Camera.qml",
+    "app/src/qml/DrawingOverlay.qml",
+    "app/src/qml/ImagePicker.qml",
+    "app/src/qml/main.qml",
+    "app/src/qml/NewSetlist.qml",
+    "app/src/qml/NewSong.qml",
+    "app/src/qml/PageConfirmDialog.qml",
+    "app/src/qml/SetlistGallery.qml",
+    "app/src/qml/SetlistViewer.qml",
+    "app/src/qml/SongGallery.qml",
+    "app/src/qml/SongSelector.qml",
+    "app/src/qml/SongViewer.qml"
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.5",
+]
+[tool.setuptools.data-files]
+"share/applications" = ["com.trumpetres.melehui.desktop"]
+"share/icons/hicolor/scalable/apps" = ["com.trumpetrespas.melehui.svg"]
+"share/metainfo" = ["com.trumpetrespas.melehui.xml"]

@@ -1,8 +1,7 @@
-from PySide6.QtCore import QObject, Slot, Signal, Property
-from PySide6.QtQml import QmlElement
-
-from db import Setlist, Song
+from db import Setlist
 from db.session import SessionLocal
+from PySide6.QtCore import QObject, Signal, Slot
+from PySide6.QtQml import QmlElement
 
 QML_IMPORT_NAME = "MeleHui"
 QML_IMPORT_MAJOR_VERSION = 1

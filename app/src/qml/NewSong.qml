@@ -31,10 +31,25 @@ Kirigami.Page {
             Kirigami.FormData.isSection: true
         }
         Controls.Button {
-            text: "Add page"
+            text: "From Camera"
+            icon.name: "camera-symbolic"
             Kirigami.FormData.label: "Add Page:"
             onClicked: {
-                const page = pageStack.push(Qt.resolvedUrl("camera.qml"));
+                const page = pageStack.push(Qt.resolvedUrl("Camera.qml"));
+                page.pictureSave.connect((id, title) => {
+                    songBackend.addPage(id);
+                    if (root.songName == "") {
+                        root.songName = title;
+                    }
+                    pageStack.pop();
+                });
+            }
+        }
+        Controls.Button {
+            icon.name: "user-images-symbolic"
+            text: "From Image"
+            onClicked: {
+                const page = pageStack.push(Qt.resolvedUrl("ImagePicker.qml"));
                 page.pictureSave.connect((id, title) => {
                     songBackend.addPage(id);
                     if (root.songName == "") {

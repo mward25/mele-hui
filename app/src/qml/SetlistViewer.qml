@@ -19,7 +19,7 @@ Kirigami.Page {
         Controls.Button {
             text: qsTr("Add Song")
             onClicked: {
-                var page = pageStack.push(Qt.resolvedUrl("song_selector.qml"));
+                var page = pageStack.push(Qt.resolvedUrl("SongSelector.qml"));
                 page.songSelected.connect(function (songId) {
                     setlistView.addSong(songId);
                     pageStack.pop();
@@ -65,7 +65,7 @@ Kirigami.Page {
 
                         Controls.Button {
                             text: qsTr("Open")
-                            onClicked: pageStack.push(Qt.resolvedUrl("song_viewer.qml"), {
+                            onClicked: pageStack.push(Qt.resolvedUrl("SongViewer.qml"), {
                                 songId: listItemRoot.id
                             })
                         }

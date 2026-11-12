@@ -5,8 +5,8 @@ Revises: b1c2d3e4f5a6
 Create Date: 2026-11-03
 """
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 revision = "c2d3e4f5a6b7"
 down_revision = "b1c2d3e4f5a6"
@@ -21,9 +21,7 @@ def upgrade():
     )
     # backfill
     conn = op.get_bind()
-    rows = conn.execute(
-        sa.text("SELECT id, setlist_id FROM setlist_song ORDER BY id")
-    ).fetchall()
+    rows = conn.execute(sa.text("SELECT id, setlist_id FROM setlist_song ORDER BY id")).fetchall()
     counters = {}
     for rid, sid in rows:
         counters[sid] = counters.get(sid, 0)

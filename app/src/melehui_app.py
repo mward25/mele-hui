@@ -1,26 +1,22 @@
 #!/usr/bin/env python3
 
 import os
-import sys
 import signal
+import sys
 
-from PySide6.QtGui import QGuiApplication
-
-from PySide6.QtCore import QUrl
-
-from PySide6.QtQml import QQmlApplicationEngine
-
+from auto_cropper import AutoCropper
+from auto_namer import AutoNamer
 from camera_backend import CameraBackend
+from db.session import init_db
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtQml import QQmlApplicationEngine, qmlRegisterType
+from setlist_backend import SetlistBackend
+from setlist_gallery_list import SetlistGalleryList
+from setlist_view import SetlistView
 from song_backend import SongBackend
 from song_gallery_list import SongGalleryList
 from song_view import SongView
-from auto_cropper import AutoCropper
-from auto_namer import AutoNamer
-from setlist_gallery_list import SetlistGalleryList
-from setlist_backend import SetlistBackend
-from setlist_view import SetlistView
-from PySide6.QtQml import qmlRegisterType
-from db.session import init_db
 
 
 def main():

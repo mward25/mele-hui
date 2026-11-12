@@ -8,8 +8,8 @@ Create Date: 2026-11-01 10:31:42.535633
 
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 revision: str = "9d9fb8487966"
 down_revision: Union[str, Sequence[str], None] = None
@@ -38,16 +38,12 @@ def upgrade() -> None:
         "page",
         sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
         sa.Column("song_id", sa.Integer(), sa.ForeignKey("song.id"), nullable=False),
-        sa.Column(
-            "file_id", sa.Integer(), sa.ForeignKey("file_store.id"), nullable=False
-        ),
+        sa.Column("file_id", sa.Integer(), sa.ForeignKey("file_store.id"), nullable=False),
     )
     op.create_table(
         "setlist_song",
         sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
-        sa.Column(
-            "setlist_id", sa.Integer(), sa.ForeignKey("setlist.id"), nullable=False
-        ),
+        sa.Column("setlist_id", sa.Integer(), sa.ForeignKey("setlist.id"), nullable=False),
         sa.Column("song_id", sa.Integer(), sa.ForeignKey("song.id"), nullable=False),
     )
 

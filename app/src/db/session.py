@@ -1,11 +1,9 @@
 import os
 from pathlib import Path
 
-from PySide6.QtCore import QCoreApplication, QStandardPaths
-from sqlalchemy import create_engine
+from PySide6.QtCore import QStandardPaths
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
-
-from .base import Base
 
 
 def _data_dir() -> Path:
@@ -24,11 +22,8 @@ DATABASE_URL = os.environ.get(
     "MELEHUI_DB_URL",
     "sqlite:///" + str(_data_dir() / "melehui.db"),
 )
-from sqlalchemy import event
 
-engine = create_engine(
-    DATABASE_URL, future=True, connect_args={"check_same_thread": False}
-)
+engine = create_engine(DATABASE_URL, future=True, connect_args={"check_same_thread": False})
 
 
 @event.listens_for(engine, "connect")
@@ -42,9 +37,9 @@ SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 def init_db():
     # Run Alembic migrations to bring schema up to date.
-    from alembic.config import Config
+
     from alembic import command as alembic_command
-    import os
+    from alembic.config import Config
 
     app_root = Path(__file__).resolve().parents[2]
     cfg = Config(str(app_root / "alembic.ini"))
