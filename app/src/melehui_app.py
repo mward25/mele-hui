@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+
+from PySide6 import QtCore as _QtCore
+
+os.environ.setdefault(
+    "QT_QPA_PLATFORM_PLUGIN_PATH",
+    os.path.join(os.path.dirname(_QtCore.__file__), "Qt", "plugins"),
+)
 import signal
 import sys
 

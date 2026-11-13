@@ -17,3 +17,8 @@
 /app/src/com.trumpetrespas.melehui.egg-info
 /com.trumpetrespas.melehui.egg-info
 /MeleHui
+/app/src/db/migrations/__pycache__
+/app/src/db/migrations/versions/__pycache__
+/local-repo
+/.flatpak-repo
+/melehui.flatpak
