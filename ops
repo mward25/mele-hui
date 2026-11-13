@@ -1,1 +1,1 @@
-{"author":{"id":"193a4d68eaf7334a767c00dcece80e154f188b557c8eaf210ec4dd8182472bcf"},"ops":[{"type":8,"timestamp":1794600619,"nonce":"omWjokzSGpND2ABqg5zlAnbEUto=","target":"1c3e717e54d83edaf8b9379fe7d4f2ae49d2735d12bbd02de52103eacb73f235","new_metadata":{"github-id":"I_kwDOVfeAL88AAAABfDmA5A","github-url":"https://github.com/mward25/mele-hui/issues/14"}}]}
+{"author":{"id":"193a4d68eaf7334a767c00dcece80e154f188b557c8eaf210ec4dd8182472bcf"},"ops":[{"type":5,"timestamp":1794601531,"nonce":"eiqOFyQMglunF/mtF2+pm7yAIPs=","added":["enhancement"],"removed":null}]}
