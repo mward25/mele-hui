@@ -86,7 +86,7 @@ dev = [
 ]
 
 [tool.setuptools.data-files]
-"share/applications" = ["com.trumpetres.melehui.desktop"]
+"share/applications" = ["com.trumpetrespas.melehui.desktop"]
 "share/icons/hicolor/scalable/apps" = ["com.trumpetrespas.melehui.svg"]
 "share/metainfo" = ["com.trumpetrespas.melehui.xml"]
 

@@ -8,13 +8,13 @@ lint:
     uv run pyside6-project qmllint
     prek run --all-files
 
-build-flatpak:
-    flatpak-builder --force-clean build-dir com.trumpetrespas.melehui.json
+# build-flatpak:
+#     flatpak-builder --force-clean build-dir com.trumpetrespas.melehui.json
 
 deploy-flatpak: build-flatpak
-    flatpak build-bundle build-dir melehui.flatpak com.trumpetrespas.melehui
-#build-flatpak:
-#    flatpak-builder --user --force-clean --install-deps-from=flathub build-dir com.trumpetrespas.melehui.json
-#
+    flatpak build-export .flatpak-repo build-dir
+    flatpak build-bundle .flatpak-repo melehui.flatpak com.trumpetrespas.melehui
+build-flatpak:
+   flatpak-builder --user --force-clean --install-deps-from=flathub build-dir com.trumpetrespas.melehui.json
 run-flatpak:
     flatpak run com.trumpetrespas.melehui

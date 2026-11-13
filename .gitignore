@@ -20,3 +20,5 @@
 /app/src/db/migrations/__pycache__
 /app/src/db/migrations/versions/__pycache__
 /local-repo
+/.flatpak-repo
+/melehui.flatpak
