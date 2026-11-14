@@ -10,6 +10,55 @@
   </description>
   <url type="homepage">https://github.com/mward25/mele-hui</url>
   <releases>
+    <release version="0.5.0" date="2026-11-13">
+      <description>
+        <p>## v0.5.0
+
+### 🚀 Features
+
+- Add Pages from Images
+- Allow for camera rotation.
+- Pdf import
+- Flatpak deploy
+
+### 🐛 Bug Fixes
+
+- Image not adding properly
+- Handle onReject in ImagePicker
+- Only allow valid files to ImagePicker
+- Pages will now scroll instead of overflowing.
+- Canvas width issues.
+- Flatpak deploying issues.
+- No camera on flatpak
+- Bad python version
+
+### ⚙️ Miscellaneous Tasks
+
+- Setup linter and fixed issues.
+- Rename qml files to Pascal Case.
+- Setup .desktop file.
+- Add ruff lint
+- Add ruff as dev dep.
+- Reformat/lint</p>
+      </description>
+    </release>
+    <release version="0.4.0" date="2026-11-12">
+      <description>
+        <p>## v0.4.0
+
+### 🚀 Features
+
+- Pip package
+
+### 🐛 Bug Fixes
+
+- Use proper writable paths from qt.
+
+### ⚙️ Miscellaneous Tasks
+
+- Reformatted codebase</p>
+      </description>
+    </release>
     <release version="0.3.0" date="2026-11-03">
       <description>
         <p>## v0.3.0
@@ -38,6 +87,22 @@
 ### ⚙️ Miscellaneous Tasks
 
 - Fix typo (Galery to Gallery)</p>
+      </description>
+    </release>
+    <release version="0.2.0" date="2026-11-03">
+      <description>
+        <p>v0.2.0 - Better image handling
+
+Features:
+ - Auto-cropping for pages.
+ - Basic image editing.
+ - Auto-naming (use OCR to name a song if a name is not already
+   inputted.)</p>
+      </description>
+    </release>
+    <release version="0.1.0" date="2026-11-03">
+      <description>
+        <p>Added song_viewer</p>
       </description>
     </release>
   </releases>
