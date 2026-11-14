@@ -10,6 +10,13 @@
   </description>
   <url type="homepage">https://github.com/mward25/mele-hui</url>
   <releases>
+    <release version="0.5.1" date="2026-11-13">
+      <description>
+        <p>### ⚙️ Miscellaneous Tasks
+
+- Add missing appstream metadata for releases</p>
+      </description>
+    </release>
     <release version="0.5.0" date="2026-11-13">
       <description>
         <p>## v0.5.0
