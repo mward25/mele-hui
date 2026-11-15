@@ -76,6 +76,12 @@ Kirigami.ApplicationWindow {
                     text: qsTr("Create Song")
                     onClicked: pageStack.push(Qt.resolvedUrl("NewSong.qml"))
                 }
+                Controls.Button {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    text: qsTr("About")
+                    onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+                }
             }
         }
     }

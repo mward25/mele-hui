@@ -25,8 +25,17 @@ from song_backend import SongBackend
 from song_gallery_list import SongGalleryList
 from song_view import SongView
 
+license_text = """Mele Hui, A sheet music reading & organization program.
+Copyright (C) 2026  Miles Ward
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version."""
+
 
 def main():
+    sys.stderr.write("\n" + license_text + "\n\n")
     """Initializes and manages the application execution"""
     app = QGuiApplication(sys.argv)
     init_db()
