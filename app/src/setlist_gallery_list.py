@@ -14,10 +14,22 @@ class SetlistGalleryList(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._setlists = []
+        self._name_filter = ""
+        self.refresh()
+
+    def _get_name_filter(self):
+        return self._name_filter
+
+    def _set_name_filter(self, name_filter):
+        self._name_filter = name_filter
+        self.nameFilterChanged.emit()
         self.refresh()
 
     def _get_setlists(self):
         return list(self._setlists)
+
+    nameFilterChanged = Signal()
+    nameFilter = Property(str, _get_name_filter, _set_name_filter, notify=nameFilterChanged)
 
     setlists = Property(list, _get_setlists, notify=setlistsChanged)
 
@@ -32,7 +44,8 @@ class SetlistGalleryList(QObject):
     def refresh(self):
         session = SessionLocal()
         try:
-            rows = session.query(Setlist).all()
+            # rows = session.query(Setlist).all()
+            rows = session.query(Setlist).filter(Setlist.name.like("%" + self._name_filter + "%")).all()
             self._setlists = [
                 {
                     "id": s.id,
