@@ -10,31 +10,41 @@ Kirigami.Page {
 
     SetlistGalleryList {
         id: setlistList
+        nameFilter: filterField.text
     }
 
-    Flickable {
+    ColumnLayout {
         anchors.fill: parent
-        contentWidth: width
-        contentHeight: cards.implicitHeight
-        Kirigami.CardsLayout {
-            id: cards
-            width: parent.width
-            Repeater {
-                model: setlistList.setlists
-                Kirigami.Card {
-                    actions: [
-                        Kirigami.Action {
-                            text: qsTr("Open")
-                            onTriggered: {
-                                pageStack.push(Qt.resolvedUrl("SetlistViewer.qml"), {
-                                    "setlistId": modelData.id
-                                });
+        Controls.TextField {
+            id: filterField
+            Layout.fillWidth: true
+            placeholderText: "Filter Setlists"
+        }
+        Flickable {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentWidth: width
+            contentHeight: cards.implicitHeight
+            Kirigami.CardsLayout {
+                id: cards
+                width: parent.width
+                Repeater {
+                    model: setlistList.setlists
+                    Kirigami.Card {
+                        actions: [
+                            Kirigami.Action {
+                                text: qsTr("Open")
+                                onTriggered: {
+                                    pageStack.push(Qt.resolvedUrl("SetlistViewer.qml"), {
+                                        "setlistId": modelData.id
+                                    });
+                                }
                             }
+                        ]
+                        banner {
+                            source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
+                            title: modelData.name
                         }
-                    ]
-                    banner {
-                        source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
-                        title: modelData.name
                     }
                 }
             }

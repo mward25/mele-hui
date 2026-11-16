@@ -11,9 +11,21 @@ QML_IMPORT_MAJOR_VERSION = 1
 class SongGalleryList(QObject):
     songsChanged = Signal()
 
+    def _get_name_filter(self):
+        return self._name_filter
+
+    def _set_name_filter(self, name_filter):
+        self._name_filter = name_filter
+        self.nameFilterChanged.emit()
+        self.refresh()
+
+    nameFilterChanged = Signal()
+    nameFilter = Property(str, _get_name_filter, _set_name_filter, notify=nameFilterChanged)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._songs = []
+        self._name_filter = ""
         self.refresh()
 
     def _get_songs(self):
@@ -32,7 +44,11 @@ class SongGalleryList(QObject):
     def refresh(self):
         session = SessionLocal()
         try:
-            rows = session.query(Song).all()
+            rows = None
+            if self._name_filter != "":
+                rows = session.query(Song).filter(Song.name.like("%" + self._name_filter + "%")).all()
+            else:
+                rows = session.query(Song).all()
             self._songs = [
                 {
                     "id": s.id,
