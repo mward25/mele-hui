@@ -8,6 +8,8 @@ Kirigami.Page {
     id: root
     title: qsTr("New Song")
 
+    signal songCreated(var id)
+
     SongBackend {
         id: songBackend
     }
@@ -88,6 +90,7 @@ Kirigami.Page {
                     songBackend.clear();
                     pageStack.pop();
                 }
+                root.songCreated(id);
             }
         }
     }

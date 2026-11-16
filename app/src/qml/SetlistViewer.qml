@@ -13,12 +13,22 @@ Kirigami.Page {
         id: setlistView
         setlistId: root.setlistId
     }
-
-    ColumnLayout {
-        anchors.fill: parent
-        Controls.Button {
-            text: qsTr("Add Song")
-            onClicked: {
+    actions: [
+        Kirigami.Action {
+            text: "Create New Song"
+            icon.name: "document-new"
+            onTriggered: {
+                var page = pageStack.push(Qt.resolvedUrl("NewSong.qml"));
+                page.songCreated.connect(function (songId) {
+                    setlistView.addSong(songId);
+                    pageStack.pop();
+                });
+            }
+        },
+        Kirigami.Action {
+            text: "Add Existing Song"
+            icon.name: "document-import-symbolic"
+            onTriggered: {
                 var page = pageStack.push(Qt.resolvedUrl("SongSelector.qml"));
                 page.songSelected.connect(function (songId) {
                     setlistView.addSong(songId);
@@ -26,6 +36,10 @@ Kirigami.Page {
                 });
             }
         }
+    ]
+
+    ColumnLayout {
+        anchors.fill: parent
         ListView {
             id: songList
             Layout.fillWidth: true
