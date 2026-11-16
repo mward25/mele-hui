@@ -65,7 +65,7 @@ Kirigami.Page {
 
                         Controls.Button {
                             text: qsTr("Open")
-                            onClicked: pageStack.push(Qt.resolvedUrl("SongViewer.qml"), {
+                            onClicked: pageStack.layers.push(Qt.resolvedUrl("SongViewer.qml"), {
                                 songId: listItemRoot.id
                             })
                         }
