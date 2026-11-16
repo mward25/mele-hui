@@ -10,31 +10,41 @@ Kirigami.Page {
 
     SongGalleryList {
         id: songList
+        nameFilter: filterField.text
     }
 
-    Flickable {
+    ColumnLayout {
         anchors.fill: parent
-        contentWidth: width
-        contentHeight: cards.implicitHeight
-        Kirigami.CardsLayout {
-            id: cards
-            width: parent.width
-            Repeater {
-                model: songList.songs
-                Kirigami.Card {
-                    actions: [
-                        Kirigami.Action {
-                            text: qsTr("Open")
-                            onTriggered: {
-                                pageStack.layers.push(Qt.resolvedUrl("SongViewer.qml"), {
-                                    "songId": modelData.id
-                                });
+        Controls.TextField {
+            id: filterField
+            Layout.fillWidth: true
+            placeholderText: "Filter Songs"
+        }
+        Flickable {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentWidth: width
+            contentHeight: cards.implicitHeight
+            Kirigami.CardsLayout {
+                id: cards
+                width: parent.width
+                Repeater {
+                    model: songList.songs
+                    Kirigami.Card {
+                        actions: [
+                            Kirigami.Action {
+                                text: qsTr("Open")
+                                onTriggered: {
+                                    pageStack.layers.push(Qt.resolvedUrl("SongViewer.qml"), {
+                                        "songId": modelData.id
+                                    });
+                                }
                             }
+                        ]
+                        banner {
+                            source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
+                            title: modelData.name
                         }
-                    ]
-                    banner {
-                        source: modelData.first_page_img_path != null ? modelData.first_page_img_path : ""
-                        title: modelData.name
                     }
                 }
             }
