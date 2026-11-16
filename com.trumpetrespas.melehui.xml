@@ -10,14 +10,23 @@
   </description>
   <url type="homepage">https://github.com/mward25/mele-hui</url>
   <releases>
+    <release version="0.6.1" date="2026-11-13">
+      <p>## v0.6.1
+### ⚙️ Miscellaneous Tasks
+
+- Add missing release metadata for v0.6.0
+- Add release metadata for v0.6.1
+      </p>
+    </release>
     <release version="0.6.0" date="2026-11-13">
-      ## v0.6.0
+      <p>## v0.6.0
 
-### 🚀 Features
+        ### 🚀 Features
 
-- Add about page with license info
-- License to console print
-- Songs now open full-page.
+        - Add about page with license info
+        - License to console print
+        - Songs now open full-page.
+      </p>
     </release>
     <release version="0.5.1" date="2026-11-13">
       <description>
