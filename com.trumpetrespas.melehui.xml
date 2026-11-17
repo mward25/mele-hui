@@ -10,6 +10,20 @@
   </description>
   <url type="homepage">https://github.com/mward25/mele-hui</url>
   <releases>
+  <release version="0.6.1" date="2026-11-13">
+      <p>
+        ## v0.7.0
+        ### 🚀 Features
+
+        - New song button for Setlist
+        - Song filtering in the Song Gallery
+        - Filtering in Song Picker/Selector
+        - Filter setlists
+        - Setlists sorted by creation time
+        - Mark songs as neads practice
+        - Filter by needs practice in song gallery
+      </p>
+    </release>
     <release version="0.6.1" date="2026-11-13">
       <p>## v0.6.1
 ### ⚙️ Miscellaneous Tasks
