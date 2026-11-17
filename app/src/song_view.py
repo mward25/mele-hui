@@ -11,6 +11,7 @@ QML_IMPORT_MAJOR_VERSION = 1
 class SongView(QObject):
     songChanged = Signal()
     songIdChanged = Signal()
+    needsPracticeChanged = Signal()
 
     def _get_song(self):
         if self._song_id is None:
@@ -38,9 +39,24 @@ class SongView(QObject):
         self.songIdChanged.emit()
         self.reload()
 
+    def _set_needs_practice(self, needs_practice):
+        session = SessionLocal()
+        try:
+            session.query(Song).filter(Song.id == self._song_id).update({"needs_practice": needs_practice})
+            session.commit()
+        finally:
+            session.close()
+        self.refresh()
+
+    def _get_needs_practice(self):
+        if self._song is None:
+            return False
+        return self._song.needs_practice
+
     song = Property(dict, _get_song, notify=songChanged)
     pages = Property(list, _get_pages, notify=songChanged)
     songId = Property(int, _get_song_id, _set_song_id, notify=songIdChanged)
+    needsPractice = Property(bool, _get_needs_practice, _set_needs_practice, notify=needsPracticeChanged)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -65,6 +81,7 @@ class SongView(QObject):
                             "file_path": QUrl.fromLocalFile(page.file_store.full_path),
                         }
                     )
+                self.needsPracticeChanged.emit()
                 self.songChanged.emit()
             finally:
                 session.close()

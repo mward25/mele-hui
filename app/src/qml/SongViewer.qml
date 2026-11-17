@@ -17,6 +17,16 @@ Kirigami.ScrollablePage {
         songId: root.songId
     }
 
+    actions: [
+        Kirigami.Action {
+            text: songView.needsPractice == false ? "Mark as practiced" : "Mark as needs practice"
+            onTriggered: {
+                /// Toggle needs_practice
+                songView.needsPractice = !(songView.needsPractice);
+            }
+        }
+    ]
+
     ListView {
         id: pageList
         focus: true
