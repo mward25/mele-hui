@@ -7,18 +7,26 @@ import MeleHui 1.0
 Kirigami.Page {
     id: root
     title: qsTr("Song Gallery")
-
     SongGalleryList {
         id: songList
         nameFilter: filterField.text
+        filterByNeedsPractice: needsPracticeCheck.checked
     }
 
     ColumnLayout {
         anchors.fill: parent
-        Controls.TextField {
-            id: filterField
-            Layout.fillWidth: true
-            placeholderText: "Filter Songs"
+        RowLayout {
+            Controls.TextField {
+                id: filterField
+                Layout.fillWidth: true
+                placeholderText: "Filter Songs"
+            }
+            Controls.Label {
+                text: "Filter by needs practice"
+            }
+            Controls.CheckBox {
+                id: needsPracticeCheck
+            }
         }
         Flickable {
             Layout.fillWidth: true

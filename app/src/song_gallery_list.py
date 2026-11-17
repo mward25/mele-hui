@@ -22,10 +22,22 @@ class SongGalleryList(QObject):
     nameFilterChanged = Signal()
     nameFilter = Property(str, _get_name_filter, _set_name_filter, notify=nameFilterChanged)
 
+    def _get_filter_by_needs_practice(self):
+        return self._filter_by_needs_practice
+
+    def _set_filter_by_needs_practice(self, filter_by_needs_practice):
+        self._filter_by_needs_practice = filter_by_needs_practice
+        self.filterByNeedsPracticeChanged.emit()
+        self.refresh()
+
+    filterByNeedsPracticeChanged = Signal()
+    filterByNeedsPractice = Property(bool, _get_filter_by_needs_practice, _set_filter_by_needs_practice, notify=filterByNeedsPracticeChanged)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._songs = []
         self._name_filter = ""
+        self._filter_by_needs_practice = False
         self.refresh()
 
     def _get_songs(self):
@@ -44,11 +56,12 @@ class SongGalleryList(QObject):
     def refresh(self):
         session = SessionLocal()
         try:
-            rows = None
+            rows = session.query(Song)
             if self._name_filter != "":
-                rows = session.query(Song).filter(Song.name.like("%" + self._name_filter + "%")).all()
-            else:
-                rows = session.query(Song).all()
+                rows = rows.filter(Song.name.like("%" + self._name_filter + "%"))
+            if self._filter_by_needs_practice:
+                rows = rows.filter(Song.needs_practice)
+            rows = rows.all()
             self._songs = [
                 {
                     "id": s.id,
