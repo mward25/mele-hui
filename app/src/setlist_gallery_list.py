@@ -45,7 +45,7 @@ class SetlistGalleryList(QObject):
         session = SessionLocal()
         try:
             # rows = session.query(Setlist).all()
-            rows = session.query(Setlist).filter(Setlist.name.like("%" + self._name_filter + "%")).all()
+            rows = session.query(Setlist).filter(Setlist.name.like("%" + self._name_filter + "%")).order_by(Setlist.creation_date).all()
             self._setlists = [
                 {
                     "id": s.id,
